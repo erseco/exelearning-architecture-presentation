@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Layers, Database, WifiOff, Server, Save, 
+  Database, WifiOff, Server, 
   Zap, HardDrive, Cpu, Network, Share2,
-  ArrowRight, FileJson, ChevronRight, Lock, RefreshCw,
-  ArrowDown, CheckCircle2, ChevronLeft, ChevronRight as ChevronRightIcon
+  ArrowRight, FileJson, Lock, RefreshCw,
+  CheckCircle2, ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
 import { TerminalBlock } from './components/TerminalBlock';
 import { FlowTimeline } from './components/FlowTimeline';

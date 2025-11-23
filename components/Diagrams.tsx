@@ -1,5 +1,5 @@
-import React from 'react';
-import { Database, Server, Smartphone, HardDrive, Wifi, ArrowDown, ArrowUp, ArrowLeftRight, FileJson, Layers } from 'lucide-react';
+
+import { Database, Server, Wifi, ArrowDown, ArrowLeftRight, FileJson, Layers } from 'lucide-react';
 
 export const HierarchyDiagram = () => {
   return (
