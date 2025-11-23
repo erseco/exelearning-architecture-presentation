@@ -325,7 +325,7 @@ export default function App() {
         
         {/* Progress Info */}
         <div className="flex items-center gap-4 text-sm font-mono text-slate-500">
-          <span className="hidden md:inline">eXeLearning Arch v2.0</span>
+          <span className="hidden md:inline">eXeLearning Arch v3.1</span>
           <div className="h-4 w-px bg-slate-800 hidden md:block"></div>
           <span className="text-slate-300">
             {String(currentSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
