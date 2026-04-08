@@ -162,7 +162,7 @@ const SlidePrinciples = () => (
       <FeatureCard 
         icon={WifiOff} 
         title="Offline-First" 
-        desc="El cliente es completamente funcional sin servidor. Toda la edición ocurre en memoria y persiste en IndexedDB localmente."
+        desc="El cliente es completamente funcional sin servidor. La edición ocurre en memoria y los assets se reutilizan localmente mediante Cache API."
       />
       <FeatureCard 
         icon={Server} 
@@ -173,7 +173,7 @@ const SlidePrinciples = () => (
       <FeatureCard 
         icon={HardDrive} 
         title="Lazy Loading" 
-        desc="Nada se carga hasta que se necesita. Los assets pesados (imágenes/videos) se solicitan bajo demanda P2P."
+        desc="Nada se carga hasta que se necesita. Los assets pesados (imágenes/videos) se resuelven bajo demanda y quedan disponibles en caché local."
       />
       <FeatureCard 
         icon={Share2} 
@@ -221,18 +221,18 @@ const SlideComponents = () => (
         <div className="grid gap-4">
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
               <h4 className="text-blue-300 font-mono font-bold mb-1">YjsDocumentManager</h4>
-              <p className="text-sm text-slate-400">Orquestador principal. Gestiona la instancia Y.Doc, la persistencia en IndexedDB y la conexión WebSocketProvider (y-websocket).</p>
+              <p className="text-sm text-slate-400">Orquestador principal. Gestiona la instancia Y.Doc en memoria y la conexión WebSocketProvider (y-websocket) cuando el proyecto está online.</p>
             </div>
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
               <h4 className="text-blue-300 font-mono font-bold mb-1">AssetManager</h4>
-              <p className="text-sm text-slate-400">Sistema de caché inteligente con cola de prioridad. Intercepta peticiones de imágenes, verifica caché local y solicita vía P2P si es necesario.</p>
+              <p className="text-sm text-slate-400">Sistema de caché inteligente. Intercepta peticiones de imágenes, usa Cache API para reutilización local y resuelve assets desde backend o proyecto estático según el modo.</p>
             </div>
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
-              <h4 className="text-blue-300 font-mono font-bold mb-1">IndexedDB</h4>
+              <h4 className="text-blue-300 font-mono font-bold mb-1">Cache API</h4>
               <p className="text-sm text-slate-400">
-                Almacenamiento persistente en navegador.
-                <br/><span className="text-slate-500 text-xs">store: y-indexeddb (historial cambios Yjs)</span>
-                <br/><span className="text-slate-500 text-xs">store: assets-blob (archivos binarios, content-addressable)</span>
+                Caché persistente en navegador para binarios y respuestas de assets.
+                <br/><span className="text-slate-500 text-xs">Entradas cacheadas por URL / assetId</span>
+                <br/><span className="text-slate-500 text-xs">Reutilización offline en modo online y static</span>
               </p>
             </div>
         </div>
@@ -269,10 +269,10 @@ const SlideSync = () => (
 );
 
 const SlideAssets = () => (
-  <SlideContainer title="Gestión de Assets (P2P)" icon={FileJson}>
+  <SlideContainer title="Gestión de Assets" icon={FileJson}>
     <div className="mb-8">
       <p className="text-lg text-slate-300 max-w-3xl">
-        Para mantener el documento ligero, los archivos binarios (imágenes, videos) <strong>NO se guardan dentro del documento Yjs</strong>. Se transfieren bajo demanda.
+        Para mantener el documento ligero, los archivos binarios (imágenes, videos) <strong>NO se guardan dentro del documento Yjs</strong>. El documento solo referencia metadatos; los assets se resuelven bajo demanda y se cachean localmente con <strong>Cache API</strong>.
       </p>
     </div>
     <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 md:p-10">

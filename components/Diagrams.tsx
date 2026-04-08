@@ -27,13 +27,13 @@ export const HierarchyDiagram = () => {
              <span className="text-[10px] text-slate-500 uppercase font-bold">Sync &lt; 100ms</span>
           </div>
 
-          {/* IndexedDB */}
+          {/* Cache API */}
           <div className="flex flex-col items-center text-center group">
             <div className="w-24 h-24 bg-emerald-900/30 rounded-xl border border-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/10 group-hover:scale-105 transition-transform">
               <Database size={40} className="text-emerald-300" />
             </div>
-            <div className="mt-3 font-mono text-emerald-200 font-bold">IndexedDB</div>
-            <div className="text-xs text-slate-400 mt-1">Persistencia Local</div>
+            <div className="mt-3 font-mono text-emerald-200 font-bold">Cache API</div>
+            <div className="text-xs text-slate-400 mt-1">Assets locales cacheados</div>
           </div>
         </div>
 

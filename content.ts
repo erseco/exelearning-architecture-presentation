@@ -30,23 +30,23 @@ export const TECH_STACK = [
 
 export const RUNTIME_MODES = [
   {
-    name: 'Server (Online)',
+    name: 'Online',
     color: 'blue',
-    features: ['API REST + WebSocket', 'Base de datos (SQLite / PG / MySQL)', 'Colaboración en tiempo real', 'Auth: password, CAS, OIDC, guest'],
+    features: ['API REST + WebSocket', 'Base de datos (SQLite / PG / MySQL)', 'Colaboración en tiempo real', 'Assets bajo demanda + caché local'],
     deploy: 'docker run exelearning/exelearning',
     icon: 'server',
   },
   {
-    name: 'Static (Offline)',
+    name: 'Static (Monousuario)',
     color: 'green',
-    features: ['Sin servidor ni base de datos', 'Persistencia en IndexedDB del navegador', 'Exportar / guardar en fichero .elpx', 'Instaladores Electron (Win/Mac/Linux)'],
+    features: ['Sin servidor ni base de datos', 'Uso local en una única instancia', 'Assets cacheados con Cache API', 'Exportar / guardar en fichero .elpx'],
     deploy: 'make build-static',
     icon: 'harddrive',
   },
   {
-    name: 'Embedded (iFrame)',
+    name: 'Embeddable',
     color: 'purple',
-    features: ['Integración en cualquier web/LMS', 'postMessage API (OPEN / SAVE)', 'Compatible con modo Server o Static', 'Moodle, CMS y portales educativos'],
+    features: ['Integrable en cualquier web/LMS', 'postMessage API (OPEN / SAVE)', 'Compatible con modo Online o Static', 'Moodle, CMS y portales educativos'],
     deploy: '<iframe src="…/exelearning/" />',
     icon: 'layers',
   },
@@ -56,7 +56,7 @@ export const FLOW_SYNC_STEPS = [
   {
     title: "Edición Local",
     description: "El usuario realiza cambios en el editor (TinyMCE, etc).",
-    details: ["Y.Text.insert()", "Y.Doc se actualiza en memoria", "IndexeddbPersistence guarda automáticamente (<100ms)"],
+    details: ["Y.Text.insert()", "Y.Doc se actualiza en memoria", "La sesión local sigue funcionando también en modo Static"],
     actor: "Client" as const
   },
   {
@@ -83,25 +83,25 @@ export const FLOW_ASSET_STEPS = [
     {
         title: "Solicitud de Asset",
         description: "Usuario B necesita ver una imagen 'asset-1'.",
-        details: ["Check IndexedDB (Miss)", "WebSocket: request-asset { assetId: 'asset-1' }"],
+        details: ["Cache API.match('asset-1') (Miss)", "Resolver referencia del asset en el documento", "Si está online, solicitar asset al backend"],
         actor: "Client" as const
     },
     {
-        title: "Coordinación",
-        description: "Servidor busca quién tiene el archivo.",
-        details: ["BD Check (No encontrado)", "Awareness Check (Usuario A lo tiene)", "WS: upload-request -> Usuario A"],
+        title: "Resolución",
+        description: "El sistema localiza el binario según el modo de ejecución.",
+        details: ["Online: backend sirve o coordina la subida del asset", "Static: el asset se resuelve desde el paquete/proyecto local", "El documento solo guarda metadatos y referencias"],
         actor: "Server" as const
     },
     {
-        title: "Subida P2P (Relay)",
-        description: "Usuario A sube el archivo bajo demanda.",
-        details: ["Lectura IndexedDB", "POST /api/assets/upload", "Servidor guarda y notifica 'asset-ready'"],
-        actor: "Client" as const
+        title: "Transferencia",
+        description: "El binario se entrega bajo demanda, sin incrustarlo en Yjs.",
+        details: ["POST /api/assets/upload o GET /api/assets/:id", "Respuesta HTTP cacheable", "La colaboración solo replica referencias, no blobs"],
+        actor: "Server" as const
     },
     {
-        title: "Descarga y Render",
+        title: "Cache local y Render",
         description: "Usuario B descarga y muestra la imagen.",
-        details: ["GET /api/assets/asset-1", "Guardar en IndexedDB", "Renderizar Blob URL"],
+        details: ["Guardar respuesta en Cache API", "Reutilización offline en sesiones posteriores", "Renderizar Blob/Object URL"],
         actor: "Client" as const
     }
 ]
