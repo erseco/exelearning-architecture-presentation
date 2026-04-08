@@ -20,9 +20,20 @@ export interface Principle {
   color: string;
 }
 
-export interface Metric {
-  label: string;
+export interface Integration {
+  name: string;
+  plugin: string;
+  color: string;
+  logoColor: string;
+  type: string;
+  description: string;
+  features: string[];
+  useCase: string;
+}
+
+export interface Improvement {
+  title: string;
   before: string;
   after: string;
-  improvement: string;
+  why: string;
 }
