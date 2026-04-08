@@ -1,5 +1,5 @@
 
-import { Database, Server, Wifi, ArrowDown, ArrowLeftRight, FileJson, Layers } from 'lucide-react';
+import { Database, Server, Wifi, ArrowDown, ArrowLeftRight, FileJson, Shield } from 'lucide-react';
 
 export const HierarchyDiagram = () => {
   return (
@@ -62,7 +62,7 @@ export const HierarchyDiagram = () => {
              <Server size={32} className="text-purple-400" />
              <div className="text-left">
                 <div className="font-bold text-slate-200">Base de Datos</div>
-                <div className="text-xs text-slate-400">PostgreSQL / MariaDB</div>
+                <div className="text-xs text-slate-400">SQLite / PostgreSQL / MySQL</div>
              </div>
           </div>
 
@@ -95,8 +95,8 @@ export const BackendDiagram = () => {
         <div className="relative z-10 flex flex-col items-center">
             {/* Title */}
             <div className="flex items-center gap-3 mb-8 bg-slate-800 px-6 py-2 rounded-full border border-slate-600 shadow-xl">
-               <div className="w-3 h-3 rounded-full bg-red-500"></div>
-               <span className="font-bold text-slate-200">NestJS Server</span>
+               <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+               <span className="font-bold text-slate-200">Elysia + Bun Server</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -104,11 +104,11 @@ export const BackendDiagram = () => {
                {/* GATEWAY */}
                <div className="bg-indigo-900/20 border border-indigo-500/40 p-5 rounded-lg flex flex-col gap-3 hover:bg-indigo-900/30 transition-colors">
                   <div className="flex items-center justify-between text-indigo-300 mb-2">
-                     <span className="font-mono font-bold">YjsGateway</span>
+                     <span className="font-mono font-bold">Yjs WebSocket</span>
                      <Wifi size={18} />
                   </div>
                   <div className="bg-slate-950/50 p-2 rounded text-xs text-slate-400 font-mono border border-indigo-500/20">
-                     Port: 3000/yjs (WS)
+                     /yjs/project-{'{uuid}'}?token=JWT
                   </div>
                   <ul className="text-xs text-slate-300 space-y-1 ml-1 list-disc list-inside">
                      <li>Pure Relay (Sin memoria)</li>
@@ -117,28 +117,29 @@ export const BackendDiagram = () => {
                   </ul>
                </div>
 
-               {/* ASSET COORDINATOR */}
+               {/* AUTH */}
                <div className="bg-cyan-900/20 border border-cyan-500/40 p-5 rounded-lg flex flex-col gap-3 hover:bg-cyan-900/30 transition-colors">
                   <div className="flex items-center justify-between text-cyan-300 mb-2">
-                     <span className="font-mono font-bold">AssetCoordinator</span>
-                     <Layers size={18} />
+                     <span className="font-mono font-bold">Auth Middleware</span>
+                     <Shield size={18} />
                   </div>
                   <div className="bg-slate-950/50 p-2 rounded text-xs text-slate-400 font-mono border border-cyan-500/20">
-                     Awareness Logic
+                     JWT / CAS / OIDC / Guest
                   </div>
                   <ul className="text-xs text-slate-300 space-y-1 ml-1 list-disc list-inside">
-                     <li>Mapea quién tiene qué</li>
-                     <li>Rutea peticiones P2P</li>
-                     <li>Trigger pre-fetch</li>
+                     <li>Sesiones con Bearer token</li>
+                     <li>Creación auto de usuarios</li>
+                     <li>Modo offline (sin auth)</li>
                   </ul>
                </div>
 
                {/* REST API */}
                <div className="md:col-span-2 bg-slate-800/40 border border-slate-600 border-dashed p-4 rounded-lg flex justify-between items-center">
-                  <span className="text-slate-400 font-bold text-sm">REST API Controllers</span>
-                  <div className="flex gap-4">
+                  <span className="text-slate-400 font-bold text-sm">REST API (Elysia + Swagger)</span>
+                  <div className="flex gap-2 flex-wrap justify-end">
                      <span className="px-3 py-1 bg-slate-700 rounded text-xs text-slate-300 font-mono">/api/projects</span>
                      <span className="px-3 py-1 bg-slate-700 rounded text-xs text-slate-300 font-mono">/api/assets</span>
+                     <span className="px-3 py-1 bg-slate-700 rounded text-xs text-slate-300 font-mono">/api/auth</span>
                   </div>
                </div>
 
