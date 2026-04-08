@@ -19,6 +19,39 @@ export const CODE_YDOC_STRUCTURE = `Y.Doc {
   }
 }`;
 
+export const TECH_STACK = [
+  { name: 'Bun', role: 'Runtime & Package Manager', color: 'orange', desc: 'Ultra-rápido runtime JS/TS. Reemplaza Node.js + npm.' },
+  { name: 'Elysia', role: 'Web Framework', color: 'violet', desc: 'Framework type-safe para Bun. REST API + WebSocket.' },
+  { name: 'Kysely', role: 'ORM / Query Builder', color: 'blue', desc: 'SQL type-safe. Soporta SQLite, PostgreSQL y MySQL.' },
+  { name: 'TypeScript', role: 'Lenguaje', color: 'sky', desc: 'Todo el backend en TS. Biome como linter/formatter.' },
+  { name: 'Yjs + WS', role: 'Colaboración', color: 'green', desc: 'CRDTs para edición colaborativa en tiempo real vía WebSocket.' },
+  { name: 'Electron', role: 'Desktop App', color: 'cyan', desc: 'Instaladores offline para Windows, macOS y Linux.' },
+];
+
+export const RUNTIME_MODES = [
+  {
+    name: 'Server (Online)',
+    color: 'blue',
+    features: ['API REST + WebSocket', 'Base de datos (SQLite / PG / MySQL)', 'Colaboración en tiempo real', 'Auth: password, CAS, OIDC, guest'],
+    deploy: 'docker run exelearning/exelearning',
+    icon: 'server',
+  },
+  {
+    name: 'Static (Offline)',
+    color: 'green',
+    features: ['Sin servidor ni base de datos', 'Persistencia en IndexedDB del navegador', 'Exportar / guardar en fichero .elpx', 'Instaladores Electron (Win/Mac/Linux)'],
+    deploy: 'make build-static',
+    icon: 'harddrive',
+  },
+  {
+    name: 'Embedded (iFrame)',
+    color: 'purple',
+    features: ['Integración en cualquier web/LMS', 'postMessage API (OPEN / SAVE)', 'Compatible con modo Server o Static', 'Moodle, CMS y portales educativos'],
+    deploy: '<iframe src="…/exelearning/" />',
+    icon: 'layers',
+  },
+];
+
 export const FLOW_SYNC_STEPS = [
   {
     title: "Edición Local",

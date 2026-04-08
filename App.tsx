@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { 
   Database, WifiOff, Server, 
   Zap, HardDrive, Cpu, Network, Share2,
-  ArrowRight, FileJson, Lock, RefreshCw,
-  CheckCircle2, ChevronLeft, ChevronRight as ChevronRightIcon
+  FileJson, Lock, RefreshCw,
+  CheckCircle2, ChevronLeft, ChevronRight as ChevronRightIcon,
+  Layers, Package, Shield, Globe, Smartphone, Terminal
 } from 'lucide-react';
 import { TerminalBlock } from './components/TerminalBlock';
 import { FlowTimeline } from './components/FlowTimeline';
 import { HierarchyDiagram, BackendDiagram } from './components/Diagrams';
-import { CODE_YDOC_STRUCTURE, FLOW_SYNC_STEPS, FLOW_ASSET_STEPS } from './content';
+import { CODE_YDOC_STRUCTURE, FLOW_SYNC_STEPS, FLOW_ASSET_STEPS, TECH_STACK, RUNTIME_MODES } from './content';
 
 // --- Components ---
 
@@ -20,26 +21,6 @@ const FeatureCard: React.FC<{ icon: React.ElementType, title: string, desc: stri
     </div>
     <h3 className="text-xl font-semibold text-slate-200 mb-2">{title}</h3>
     <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
-  </div>
-);
-
-const StatCard: React.FC<{ label: string, before: string, after: string, saved: string }> = ({ label, before, after, saved }) => (
-  <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 relative overflow-hidden">
-    <div className="absolute top-0 right-0 bg-green-500/10 text-green-400 text-xs font-bold px-3 py-1 rounded-bl-lg border-b border-l border-green-500/20">
-      {saved}
-    </div>
-    <h4 className="text-slate-400 text-sm uppercase tracking-wider font-semibold mb-4">{label}</h4>
-    <div className="flex items-center justify-between">
-      <div className="text-center opacity-50">
-        <div className="text-lg font-mono text-red-400 line-through decoration-red-500/50">{before}</div>
-        <div className="text-xs text-slate-500 mt-1">Antes</div>
-      </div>
-      <ArrowRight size={20} className="text-slate-600" />
-      <div className="text-center">
-        <div className="text-2xl font-mono text-primary-400 font-bold">{after}</div>
-        <div className="text-xs text-slate-500 mt-1">Ahora</div>
-      </div>
-    </div>
   </div>
 );
 
@@ -72,15 +53,21 @@ const SlideHero = () => (
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
         <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
       </span>
-      Presentación Técnica
+      Presentación Técnica — Nueva Arquitectura
     </div>
-    <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
-      Nueva Arquitectura <br />
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">para eXeLearning</span>
+    <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+      eXeLearning 4<br />
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">Arquitectura Moderna</span>
     </h1>
-    <p className="text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed mb-10">
-      Un enfoque <strong>Offline-First</strong> y colaborativo basado en Yjs para transformar la creación de contenidos educativos.
+    <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed mb-6">
+      Reescrito con <strong className="text-orange-400">Bun</strong> + <strong className="text-sky-400">TypeScript</strong> + <strong className="text-violet-400">Elysia</strong>.<br/>
+      <strong>Offline-First</strong>, colaborativo en tiempo real con <strong className="text-green-400">Yjs</strong> y disponible como app de escritorio con <strong className="text-cyan-400">Electron</strong>.
     </p>
+    <div className="flex flex-wrap justify-center gap-2 mb-10">
+      {['Bun Runtime', 'Elysia Framework', 'Yjs CRDT', 'WebSocket', 'SQLite · PG · MySQL', 'Electron Desktop', 'Docker'].map(tag => (
+        <span key={tag} className="px-3 py-1 rounded-full text-xs bg-slate-800 border border-slate-700 text-slate-300">{tag}</span>
+      ))}
+    </div>
     <div className="text-slate-500 text-sm font-mono flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-lg border border-slate-800">
       <span className="bg-slate-700 px-1.5 rounded text-slate-300">←</span> 
       <span className="bg-slate-700 px-1.5 rounded text-slate-300">→</span> 
@@ -88,6 +75,86 @@ const SlideHero = () => (
     </div>
   </div>
 );
+
+const SlideTechStack = () => {
+  const colorMap: Record<string, string> = {
+    orange: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    violet: 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+    blue:   'bg-blue-500/20   text-blue-400   border-blue-500/30',
+    sky:    'bg-sky-500/20    text-sky-400    border-sky-500/30',
+    green:  'bg-green-500/20  text-green-400  border-green-500/30',
+    cyan:   'bg-cyan-500/20   text-cyan-400   border-cyan-500/30',
+  };
+  return (
+    <SlideContainer title="Stack Tecnológico" icon={Package}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 h-full content-center">
+        {TECH_STACK.map(item => (
+          <div key={item.name} className={`rounded-xl border p-5 bg-slate-800/40 hover:bg-slate-800/70 transition-colors ${colorMap[item.color]}`}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl font-black">{item.name}</span>
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-2">{item.role}</div>
+            <p className="text-sm text-slate-300 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 flex flex-wrap gap-3 text-xs text-slate-500 justify-center">
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Bootstrap UI</span>
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Nunjucks Templates</span>
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Vitest + Playwright</span>
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Biome Linter</span>
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Redis (multi-instancia)</span>
+        <span className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Docker</span>
+      </div>
+    </SlideContainer>
+  );
+};
+
+const SlideRuntimeModes = () => {
+  const colorBorder: Record<string, string> = {
+    blue: 'border-blue-500/50',
+    green: 'border-green-500/50',
+    purple: 'border-purple-500/50',
+  };
+  const colorBadge: Record<string, string> = {
+    blue: 'bg-blue-600',
+    green: 'bg-green-600',
+    purple: 'bg-purple-600',
+  };
+  const colorIcon: Record<string, string> = {
+    blue: 'text-blue-400',
+    green: 'text-green-400',
+    purple: 'text-purple-400',
+  };
+  return (
+    <SlideContainer title="Modos de Ejecución" icon={Layers}>
+      <p className="text-slate-400 mb-6 max-w-3xl">
+        eXeLearning soporta tres modos de despliegue, cada uno con sus propias capacidades y casos de uso.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full content-start">
+        {RUNTIME_MODES.map(mode => (
+          <div key={mode.name} className={`bg-slate-800/40 rounded-2xl border-2 ${colorBorder[mode.color]} p-6 relative flex flex-col gap-4`}>
+            <div className={`absolute -top-3 left-5 ${colorBadge[mode.color]} text-white px-3 py-0.5 rounded-full text-xs font-bold`}>
+              {mode.name}
+            </div>
+            <ul className="space-y-2 mt-2">
+              {mode.features.map(f => (
+                <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
+                  <CheckCircle2 size={14} className={`mt-0.5 flex-shrink-0 ${colorIcon[mode.color]}`} />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 font-mono text-xs text-slate-400 break-all">
+              {mode.deploy}
+            </div>
+          </div>
+        ))}
+      </div>
+    </SlideContainer>
+  );
+};
+
 
 const SlidePrinciples = () => (
   <SlideContainer title="Principios Arquitectónicos" icon={Cpu}>
@@ -137,10 +204,10 @@ const SlideComponents = () => (
       <div className="flex flex-col gap-6">
         <div>
           <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Server className="text-purple-400" /> Backend (NestJS)
+            <Server className="text-orange-400" /> Backend (Elysia + Bun)
           </h3>
           <p className="text-slate-400 mb-4 text-sm">
-              Actúa como un router inteligente. No procesa lógica de negocio compleja sobre el contenido.
+              Router type-safe sobre Bun. Gestiona autenticación, proyectos, assets y el relay WebSocket para colaboración.
           </p>
         </div>
         <div className="flex-1">
@@ -153,19 +220,19 @@ const SlideComponents = () => (
         </h3>
         <div className="grid gap-4">
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
-              <h4 className="text-blue-300 font-mono font-bold mb-1">DocumentManager</h4>
-              <p className="text-sm text-slate-400">Orquestador principal. Gestiona la instancia Y.Doc, la persistencia en IndexedDB y la conexión WebSocketProvider.</p>
+              <h4 className="text-blue-300 font-mono font-bold mb-1">YjsDocumentManager</h4>
+              <p className="text-sm text-slate-400">Orquestador principal. Gestiona la instancia Y.Doc, la persistencia en IndexedDB y la conexión WebSocketProvider (y-websocket).</p>
             </div>
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
               <h4 className="text-blue-300 font-mono font-bold mb-1">AssetManager</h4>
-              <p className="text-sm text-slate-400">Sistema de caché inteligente. Intercepta peticiones de imágenes, verifica caché local y solicita vía P2P si es necesario.</p>
+              <p className="text-sm text-slate-400">Sistema de caché inteligente con cola de prioridad. Intercepta peticiones de imágenes, verifica caché local y solicita vía P2P si es necesario.</p>
             </div>
             <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
               <h4 className="text-blue-300 font-mono font-bold mb-1">IndexedDB</h4>
               <p className="text-sm text-slate-400">
                 Almacenamiento persistente en navegador.
-                <br/><span className="text-slate-500 text-xs">store: y-indexeddb (historial cambios)</span>
-                <br/><span className="text-slate-500 text-xs">store: assets-blob (archivos binarios)</span>
+                <br/><span className="text-slate-500 text-xs">store: y-indexeddb (historial cambios Yjs)</span>
+                <br/><span className="text-slate-500 text-xs">store: assets-blob (archivos binarios, content-addressable)</span>
               </p>
             </div>
         </div>
@@ -214,60 +281,90 @@ const SlideAssets = () => (
   </SlideContainer>
 );
 
-const SlideMetrics = () => (
-  <SlideContainer title="Impacto y Métricas" icon={Zap}>
-     <div className="flex flex-col h-full justify-center">
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        <StatCard 
-            label="Tráfico de Red (Inicio)" 
-            before="~5 MB" 
-            after="~50 KB" 
-            saved="-99%" 
-        />
-          <StatCard 
-            label="Tiempo de Carga (2ª vez)" 
-            before="5-10s" 
-            after="<300ms" 
-            saved="Instant" 
-        />
-          <StatCard 
-            label="Ancho de Banda Semanal" 
-            before="300 MB" 
-            after="6 MB" 
-            saved="-98%" 
-        />
+const SlideFeatures = () => (
+  <SlideContainer title="Características y Capacidades" icon={Zap}>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Shield size={18} className="text-green-400" />
+          <h4 className="text-white font-bold">Autenticación</h4>
+        </div>
+        <ul className="space-y-1 text-sm text-slate-300">
+          {['Password (local)', 'CAS (SSO institucional)', 'OpenID Connect (OIDC)', 'Guest (acceso temporal)', 'Sin auth (modo offline)'].map(m => (
+            <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-green-500/70 flex-shrink-0" />{m}</li>
+          ))}
+        </ul>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-slate-800/30 p-6 rounded-xl border border-slate-700">
-            <h4 className="text-white font-bold mb-4">Estrategias Clave</h4>
-            <ul className="space-y-4">
-                <li className="flex gap-3 items-start">
-                  <div className="mt-1 p-1 bg-green-500/20 text-green-400 rounded"><CheckCircle2 size={14}/></div>
-                  <div>
-                      <strong className="text-slate-200 block text-sm">Compresión Delta</strong>
-                      <span className="text-xs text-slate-400">Solo se envían los cambios, no el archivo entero.</span>
-                  </div>
-                </li>
-                <li className="flex gap-3 items-start">
-                  <div className="mt-1 p-1 bg-green-500/20 text-green-400 rounded"><CheckCircle2 size={14}/></div>
-                  <div>
-                      <strong className="text-slate-200 block text-sm">Batching de Websocket</strong>
-                      <span className="text-xs text-slate-400">Agrupa eventos rápidos en un solo paquete de red.</span>
-                  </div>
-                </li>
-            </ul>
-          </div>
-          
-          <div className="flex flex-col justify-center items-center text-center p-8 bg-gradient-to-br from-primary-900/20 to-slate-900 rounded-xl border border-primary-500/20">
-            <Cpu size={48} className="text-primary-400 mb-4" />
-            <h3 className="text-2xl font-bold text-white mb-2">Browser Computing</h3>
-            <p className="text-slate-400 text-sm max-w-xs">
-                Movemos el coste computacional del servidor (centralizado) al dispositivo del usuario (distribuido).
-            </p>
-          </div>
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Database size={18} className="text-blue-400" />
+          <h4 className="text-white font-bold">Bases de Datos</h4>
+        </div>
+        <ul className="space-y-1 text-sm text-slate-300">
+          {['SQLite (por defecto)', 'PostgreSQL', 'MySQL / MariaDB', 'ORM Kysely (type-safe)', 'Multi-instancia con Redis'].map(m => (
+            <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-blue-500/70 flex-shrink-0" />{m}</li>
+          ))}
+        </ul>
       </div>
-     </div>
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Package size={18} className="text-violet-400" />
+          <h4 className="text-white font-bold">Exportación</h4>
+        </div>
+        <ul className="space-y-1 text-sm text-slate-300">
+          {['HTML5 (web autónoma)', 'SCORM 1.2 y SCORM 2004', 'IMS Content Package', 'ePub3 (e-readers)', 'Integración con Moodle'].map(m => (
+            <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-violet-500/70 flex-shrink-0" />{m}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Smartphone size={18} className="text-cyan-400" />
+          <h4 className="text-white font-bold">Instaladores Desktop</h4>
+        </div>
+        <ul className="space-y-1 text-sm text-slate-300">
+          {['Electron (Win / macOS / Linux)', 'Formato .elpx (nuevo)', 'Compatibilidad .elp (legacy)', 'Actualizaciones automáticas', 'Firma y notarización'].map(m => (
+            <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-cyan-500/70 flex-shrink-0" />{m}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Globe size={18} className="text-amber-400" />
+          <h4 className="text-white font-bold">iDevices & i18n</h4>
+        </div>
+        <ul className="space-y-1 text-sm text-slate-300">
+          {['Múltiples iDevices interactivos', 'ES, CA, EU, GL, VA, EO, EN', 'Temas personalizables', 'Import/install de iDevices online', 'Import/install de estilos online'].map(m => (
+            <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-amber-500/70 flex-shrink-0" />{m}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Terminal size={18} className="text-orange-400" />
+          <h4 className="text-white font-bold">Inicio Rápido</h4>
+        </div>
+        <div className="space-y-2">
+          <div className="bg-slate-900 rounded-lg px-3 py-2 font-mono text-xs text-green-300 border border-slate-700">
+            # Docker (1 comando)<br/>
+            docker run -p 8080:8080 \<br/>
+            &nbsp;&nbsp;exelearning/exelearning
+          </div>
+          <div className="bg-slate-900 rounded-lg px-3 py-2 font-mono text-xs text-blue-300 border border-slate-700">
+            # Desarrollo local<br/>
+            git clone …/exelearning<br/>
+            make up-local
+          </div>
+        </div>
+      </div>
+
+    </div>
   </SlideContainer>
 );
 
@@ -278,12 +375,14 @@ export default function App() {
 
   const slides = [
     { component: <SlideHero />, id: 'hero' },
+    { component: <SlideTechStack />, id: 'techstack' },
+    { component: <SlideRuntimeModes />, id: 'runtime' },
     { component: <SlidePrinciples />, id: 'principles' },
     { component: <SlideHierarchy />, id: 'hierarchy' },
     { component: <SlideComponents />, id: 'components' },
     { component: <SlideSync />, id: 'sync' },
     { component: <SlideAssets />, id: 'assets' },
-    { component: <SlideMetrics />, id: 'metrics' },
+    { component: <SlideFeatures />, id: 'features' },
   ];
 
   const totalSlides = slides.length;
@@ -325,7 +424,7 @@ export default function App() {
         
         {/* Progress Info */}
         <div className="flex items-center gap-4 text-sm font-mono text-slate-500">
-          <span className="hidden md:inline">eXeLearning Arch v3.1</span>
+          <span className="hidden md:inline">eXeLearning Arch v4.0</span>
           <div className="h-4 w-px bg-slate-800 hidden md:block"></div>
           <span className="text-slate-300">
             {String(currentSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
