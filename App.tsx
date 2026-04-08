@@ -949,7 +949,7 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  });
+  }, [currentSlide]);
 
   return (
     <div className="h-screen w-screen bg-slate-950 text-slate-300 overflow-hidden flex flex-col relative">
