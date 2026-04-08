@@ -1,5 +1,5 @@
 {
-  "name": "eXeLearning Architecture Docs",
-  "description": "Presentación interactiva de la arquitectura colaborativa de eXeLearning con Yjs",
+  "name": "Arquitectura de eXeLearning 4.0",
+  "description": "Presentación técnica sobre la arquitectura, modos de despliegue y ecosistema de integraciones de eXeLearning 4.0",
   "requestFramePermissions": []
 }
