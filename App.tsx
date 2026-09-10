@@ -8,6 +8,7 @@ import {
   BookOpen,
   Users, LayoutDashboard, ExternalLink, Sun, Moon
 } from 'lucide-react';
+import { NextcloudLogo } from './components/NextcloudLogo';
 import { BackendDiagram } from './components/Diagrams';
 import {
   RUNTIME_MODES, INTEGRATIONS, EXPORT_FORMATS, AUTH_METHODS,
@@ -96,7 +97,7 @@ const SlideHero = () => (
     <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed mb-8">
       Herramienta libre de autoría educativa.<br />
       <span className="text-slate-300">Edición en el navegador</span>, colaborativa en tiempo real,
-      con múltiples modos de despliegue e integración con <span className="text-slate-300">WordPress</span>, <span className="text-slate-300">Moodle</span> y <span className="text-slate-300">Omeka S</span>.
+      con múltiples modos de despliegue e integración con <span className="text-slate-300">WordPress</span>, <span className="text-slate-300">Moodle</span>, <span className="text-slate-300">Omeka S</span> y <span className="text-slate-300">Nextcloud</span>.
     </p>
     <div className="flex flex-wrap justify-center gap-2 mb-8">
       {['Edición en el navegador', 'Colaboración Yjs', 'Varias bases de datos', 'Integrable', 'Escritorio con Electron', 'SCORM · HTML5 · ePub3'].map(tag => (
@@ -186,7 +187,7 @@ const SlidePrinciples = () => (
       <FeatureCard
         icon={Server}
         title="Servicios del servidor"
-        desc="El servidor gestiona acceso, archivos y guardado. El relé WebSocket reenvía cambios sin mantener un documento Yjs por sala."
+        desc="El servidor controla el acceso, guarda los archivos y transmite los cambios entre las personas que editan."
         accent="purple"
       />
       <FeatureCard
@@ -207,7 +208,7 @@ const SlidePrinciples = () => (
 
 // SLIDE 4: Arquitectura General
 const SlideArchitecture = () => (
-  <SlideContainer title="Arquitectura General" icon={Layers} subtitle="Visión global del sistema: cliente, servidor, persistencia y cómo interactúan.">
+  <SlideContainer title="Arquitectura General" icon={Layers} subtitle="Visión global del sistema: navegador, servidor, almacenamiento y cómo interactúan.">
     <div className="w-full max-w-5xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.9fr_1.15fr] gap-4">
         <div className="bg-slate-800/40 rounded-2xl border border-blue-500/30 p-5">
@@ -221,7 +222,7 @@ const SlideArchitecture = () => (
               </div>
             </div>
             <p className="text-xs text-slate-400 mt-3 leading-relaxed">
-              Estructura CRDT que contiene páginas, bloques de contenido y metadatos de archivos. Cada edición se aplica en tiempo real y combina los cambios automáticamente.
+              Documento compartido con páginas, bloques de contenido e información de los archivos. Yjs combina los cambios de las personas que editan.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-3">
@@ -240,13 +241,13 @@ const SlideArchitecture = () => (
           <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">Cómo fluye</div>
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-blue-400" /> El navegador mantiene el estado de edición</div>
-            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-purple-400" /> El relé no mantiene un Y.Doc por sala</div>
+            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-purple-400" /> El servidor transmite los cambios entre usuarios</div>
             <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-green-400" /> Guardado manual o autoguardado colaborativo</div>
             <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-orange-400" /> Los archivos viajan por un canal separado</div>
           </div>
           <div className="mt-4 rounded-xl border border-slate-700 bg-slate-800/70 p-4">
             <p className="text-xs text-slate-400 leading-relaxed">
-              CRDT significa <strong className="text-slate-200">Conflict-free Replicated Data Type</strong>: varias copias del mismo estado pueden editarse a la vez y terminar igualadas automáticamente.
+              <strong className="text-slate-200">Yjs combina las aportaciones</strong> de varias personas para que todas vean el mismo contenido.
             </p>
           </div>
         </div>
@@ -255,19 +256,19 @@ const SlideArchitecture = () => (
           <div className="text-xs font-bold uppercase tracking-wider text-purple-300 mb-3">Servidor de Cloud</div>
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-purple-900/20 border border-purple-500/20 rounded-lg p-3">
-              <div className="text-xs font-bold text-purple-300 uppercase mb-1">Relay WS</div>
+              <div className="text-xs font-bold text-purple-300 uppercase mb-1">Transmisión de cambios</div>
               <div className="text-xs text-slate-400">Reenvía actualizaciones Yjs sin interpretar el documento.</div>
             </div>
             <div className="bg-indigo-900/20 border border-indigo-500/20 rounded-lg p-3">
-              <div className="text-xs font-bold text-indigo-300 uppercase mb-1">Auth</div>
+              <div className="text-xs font-bold text-indigo-300 uppercase mb-1">Acceso</div>
               <div className="text-xs text-slate-400">JWT, CAS y OpenID Connect para acceso y sesiones.</div>
             </div>
             <div className="bg-rose-900/20 border border-rose-500/20 rounded-lg p-3">
-              <div className="text-xs font-bold text-rose-300 uppercase mb-1">DB</div>
-              <div className="text-xs text-slate-400">SQLite, PostgreSQL o MySQL para metadatos y persistencia.</div>
+              <div className="text-xs font-bold text-rose-300 uppercase mb-1">Base de datos</div>
+              <div className="text-xs text-slate-400">SQLite, PostgreSQL o MySQL para información del proyecto y guardado.</div>
             </div>
             <div className="bg-orange-900/20 border border-orange-500/20 rounded-lg p-3">
-              <div className="text-xs font-bold text-orange-300 uppercase mb-1">Assets</div>
+              <div className="text-xs font-bold text-orange-300 uppercase mb-1">Archivos</div>
               <div className="text-xs text-slate-400">Ficheros en disco y coordinación de subida entre clientes.</div>
             </div>
           </div>
@@ -276,7 +277,7 @@ const SlideArchitecture = () => (
 
       {/* Tech badges */}
       <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-500 justify-center">
-        {['Bun (ejecución)', 'Elysia (API web)', 'Kysely (consultas SQL tipadas)', 'Yjs CRDT', 'Bootstrap 5', 'Nunjucks', 'Biome', 'Vitest + Playwright', 'Docker', 'Redis (multi-instancia)'].map(t => (
+        {['Bun (ejecución)', 'Elysia (API web)', 'Kysely (consultas a la BD)', 'Yjs (edición compartida)', 'Bootstrap 5', 'Nunjucks', 'Biome', 'Vitest + Playwright', 'Docker', 'Redis (varios servidores)'].map(t => (
           <span key={t} className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">{t}</span>
         ))}
       </div>
@@ -286,12 +287,12 @@ const SlideArchitecture = () => (
 
 // SLIDE 5: Cliente
 const SlideClient = () => (
-  <SlideContainer title="Cliente: edición en el navegador" icon={Globe} subtitle="Todo el estado de edición vive en el navegador. El servidor solo interviene para coordinar y persistir.">
+  <SlideContainer title="Cliente: edición en el navegador" icon={Globe} subtitle="Todo el estado de edición vive en el navegador. El servidor solo interviene para coordinar y guardar.">
     <div className="grid md:grid-cols-2 gap-8 h-full content-center">
       <div className="space-y-4">
         <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
           <h4 className="text-blue-300 font-mono font-bold mb-1">Y.Doc (Memoria RAM)</h4>
-          <p className="text-sm text-slate-400">Estructura CRDT que contiene páginas, bloques de contenido y metadatos de archivos. Cada edición se aplica en RAM y combina los cambios automáticamente.</p>
+          <p className="text-sm text-slate-400">Documento compartido con páginas, bloques e información de los archivos. Los cambios se aplican en la memoria del navegador.</p>
         </div>
         <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
           <h4 className="text-emerald-300 font-mono font-bold mb-1">IndexedDB</h4>
@@ -336,7 +337,7 @@ const SlideClient = () => (
 
 // SLIDE 6: Servidor
 const SlideServer = () => (
-  <SlideContainer title="Cloud: API, colaboración y guardado" icon={Server} subtitle="Elysia sobre Bun. Gestiona autenticación, sincronización y persistencia del proyecto.">
+  <SlideContainer title="Cloud: API, colaboración y guardado" icon={Server} subtitle="Elysia sobre Bun. Gestiona autenticación, sincronización y guardado del proyecto.">
     <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-8 h-full content-center">
       <div>
         <BackendDiagram />
@@ -345,14 +346,14 @@ const SlideServer = () => (
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-white font-bold mb-3">Qué hace realmente</h4>
           <ul className="space-y-2 text-sm text-slate-300">
-            <li className="flex gap-2 items-start"><CheckCircle2 size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />Reenvía deltas Yjs entre clientes sin interpretar el documento.</li>
+            <li className="flex gap-2 items-start"><CheckCircle2 size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />Transmite los cambios entre las personas que editan el proyecto.</li>
             <li className="flex gap-2 items-start"><CheckCircle2 size={14} className="text-cyan-400 mt-0.5 flex-shrink-0" />Valida acceso con JWT, CAS, OIDC o invitado.</li>
             <li className="flex gap-2 items-start"><CheckCircle2 size={14} className="text-green-400 mt-0.5 flex-shrink-0" />Guarda metadatos en BD y ficheros en disco.</li>
           </ul>
         </div>
         <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-4">
           <p className="text-xs text-slate-400 leading-relaxed">
-            El relé reenvía cambios entre navegadores. Los servicios de persistencia sí reconstruyen documentos Yjs para cargar o compactar datos.
+            Compartir cambios y guardar son tareas distintas. El servidor también recupera el documento a partir de los datos guardados.
           </p>
         </div>
       </div>
@@ -367,15 +368,15 @@ const SlideAssets = () => (
       <div className="space-y-4">
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-blue-300 font-mono font-bold mb-1">1. Documento</h4>
-          <p className="text-sm text-slate-400">Yjs mantiene páginas, cajas y referencias a archivos. Solo guarda metadatos, no ficheros binarios.</p>
+          <p className="text-sm text-slate-400">Yjs mantiene las páginas, los bloques y su contenido. Las imágenes y vídeos se guardan por separado.</p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
-          <h4 className="text-emerald-300 font-mono font-bold mb-1">2. Binarios</h4>
+          <h4 className="text-emerald-300 font-mono font-bold mb-1">2. Imágenes, audio y vídeo</h4>
           <p className="text-sm text-slate-400">Las imágenes y vídeos se guardan en Cache API (o IndexedDB) en el navegador y en disco en el servidor; la BD conserva metadatos.</p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-amber-300 font-mono font-bold mb-1">3. Sin duplicados</h4>
-          <p className="text-sm text-slate-400">El hash SHA-256 identifica cada asset. Si el contenido es igual, se reutiliza la misma referencia.</p>
+          <p className="text-sm text-slate-400">SHA-256 calcula una huella del archivo. Si dos archivos tienen el mismo contenido, se puede reutilizar la misma copia.</p>
         </div>
       </div>
       <div className="space-y-4">
@@ -385,7 +386,7 @@ const SlideAssets = () => (
           </h4>
           <div className="space-y-2 text-sm text-slate-300">
             <div><strong className="text-blue-300">Cliente:</strong> IndexedDB conserva el documento; Cache API almacena los archivos.</div>
-            <div><strong className="text-purple-300">Servidor:</strong> persiste archivos y metadatos del proyecto.</div>
+            <div><strong className="text-purple-300">Servidor:</strong> guarda archivos e información del proyecto.</div>
             <div><strong className="text-green-300">BD:</strong> conserva referencias, autoría y trazabilidad.</div>
           </div>
         </div>
@@ -406,7 +407,7 @@ const SlideSync = () => (
       <div className="space-y-4">
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <p className="text-slate-400 text-sm leading-relaxed">
-            <strong className="text-slate-200">Yjs</strong> sincroniza el documento como actualizaciones binarias. El navegador edita primero, el relé reenvía cambios y varios usuarios terminan en el mismo estado.
+            <strong className="text-slate-200">Yjs</strong> combina los cambios del documento. El servidor los transmite para que las personas que colaboran vean el mismo contenido.
           </p>
         </div>
         <div className="grid gap-3">
@@ -416,21 +417,21 @@ const SlideSync = () => (
           </div>
           <div className="bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-4">
             <div className="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-1">2. Se transmite por WebSocket</div>
-            <div className="text-sm text-slate-300">El servidor reenvía el cambio binario a los demás clientes sin interpretarlo.</div>
+            <div className="text-sm text-slate-300">El servidor transmite el cambio a los demás participantes.</div>
           </div>
           <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-4">
             <div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-1">3. Yjs combina los cambios</div>
-            <div className="text-sm text-slate-300">Yjs combina las ediciones simultáneas para que los clientes converjan al mismo estado.</div>
+            <div className="text-sm text-slate-300">Yjs combina las ediciones simultáneas para que todos vean el mismo contenido.</div>
           </div>
         </div>
       </div>
       <div className="space-y-4">
         <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-indigo-500/20 rounded-xl p-5">
           <h4 className="text-white font-bold mb-3 flex items-center gap-2">
-            <Network size={18} className="text-indigo-400" /> Relé WebSocket
+            <Network size={18} className="text-indigo-400" /> Transmisión de cambios
           </h4>
           <p className="text-sm text-slate-300 leading-relaxed">
-            El relé no mantiene un documento Yjs por sala. El servidor dispone de otros servicios para guardar y recuperar proyectos.
+            El servidor transmite los cambios durante la colaboración. Por separado, guarda y recupera los proyectos.
           </p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
@@ -442,7 +443,7 @@ const SlideSync = () => (
         <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-4">
           <h4 className="text-white font-bold mb-2">Coordinación entre servidores</h4>
           <p className="text-sm text-slate-300">
-            Redis permite coordinar varios relés. Las conexiones y los permisos siguen gestionándose en el servidor.
+            Redis ayuda a coordinar varios servidores cuando trabajan juntos.
           </p>
         </div>
       </div>
@@ -503,6 +504,7 @@ const SlideEcosystem = () => (
                 <div className={`${textColor}`}>
                   {integration.name === 'WordPress' && <WordPressLogo />}
                   {integration.name === 'Omeka S' && <OmekaLogo />}
+                  {integration.name === 'Nextcloud' && <NextcloudLogo />}
                   {(integration.name.includes('Moodle')) && <MoodleLogo />}
                 </div>
                 <div>
@@ -629,8 +631,8 @@ const SlideFeatures = () => (
             'Panel de admin con gestión de usuarios',
             'Gestión de temas y plantillas',
             'Analytics y logs de actividad',
-            'Impersonación con auditoría completa',
-            'RBAC con roles y cuotas de espacio',
+            'Acceso como otro usuario con registro de actividad',
+            'Permisos por rol y límites de almacenamiento',
           ].map(m => (
             <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-indigo-500/70 flex-shrink-0" />{m}</li>
           ))}
@@ -646,9 +648,9 @@ const SlideFeatures = () => (
           {[
             'Tests unitarios (Bun test runner)',
             'Tests de integración',
-            'Tests frontend (Vitest)',
-            'Tests E2E (Playwright)',
-            'Linting con Biome',
+            'Pruebas de la interfaz (Vitest)',
+            'Pruebas de uso completo (Playwright)',
+            'Revisión del código con Biome',
           ].map(m => (
             <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-cyan-500/70 flex-shrink-0" />{m}</li>
           ))}
@@ -672,9 +674,9 @@ const SlideClosure = () => (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mb-10">
       {[
         { label: 'Edición en el navegador', desc: 'Estado de edición local', icon: Globe },
-        { label: 'Colaborativo', desc: 'Yjs CRDTs en tiempo real', icon: Users },
+        { label: 'Colaborativo', desc: 'Edición compartida con Yjs', icon: Users },
         { label: 'Multi-despliegue', desc: 'Online · Cloud · Embebida', icon: Layers },
-        { label: 'Ecosistema', desc: 'WordPress · Moodle · Omeka S', icon: ExternalLink },
+        { label: 'Ecosistema', desc: 'WordPress · Moodle · Omeka S · Nextcloud', icon: ExternalLink },
       ].map(item => (
         <div key={item.label} className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-center">
           <item.icon size={24} className="mx-auto text-primary-400 mb-2" />
@@ -685,7 +687,7 @@ const SlideClosure = () => (
     </div>
 
     {/* Platform logos */}
-    <div className="flex items-center gap-8 mb-8 text-slate-500">
+    <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-8 text-slate-500">
       <div className="flex flex-col items-center gap-1">
         <WordPressLogo />
         <span className="text-xs">WordPress</span>
@@ -697,6 +699,10 @@ const SlideClosure = () => (
       <div className="flex flex-col items-center gap-1">
         <OmekaLogo />
         <span className="text-xs">Omeka S</span>
+      </div>
+      <div className="flex flex-col items-center gap-1">
+        <NextcloudLogo />
+        <span className="text-xs">Nextcloud</span>
       </div>
     </div>
 
