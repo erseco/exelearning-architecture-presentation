@@ -23,7 +23,7 @@ export const CODE_YDOC_STRUCTURE = `Y.Doc {
 // --- Modos de ejecución ---
 export const RUNTIME_MODES = [
   {
-    name: 'Servidor (online)',
+    name: 'Cloud (colaborativa)',
     color: 'blue',
     features: [
       'API REST + WebSocket colaborativo',
@@ -36,7 +36,7 @@ export const RUNTIME_MODES = [
     description: 'Instalación multiusuario con colaboración en tiempo real y persistencia centralizada.',
   },
   {
-    name: 'Estático (uso local)',
+    name: 'Online (navegador)',
     color: 'green',
     features: [
       'Sin backend de eXeLearning',
@@ -45,33 +45,33 @@ export const RUNTIME_MODES = [
     ],
     deploy: 'make build-static',
     icon: 'harddrive',
-    description: 'Editor sin backend de eXeLearning, con almacenamiento del navegador y guardado en archivos.',
+    description: 'Versión Online: edición en el navegador, sin backend de eXeLearning, con almacenamiento local y guardado en archivos.',
   },
   {
-    name: 'Embebido (iframe)',
+    name: 'Embebida (plugins)',
     color: 'purple',
     features: [
       'Integrable en cualquier plataforma web',
       'postMessage: OPEN_FILE / REQUEST_SAVE',
-      'Editor estático integrado en la plataforma',
+      'Versión embebida integrada en la plataforma',
       'WordPress, Moodle, Omeka S y más',
     ],
     deploy: '<iframe src="…/exelearning/" />',
     icon: 'layers',
-    description: 'Se incrusta en CMS/LMS externos. La plataforma anfitriona gestiona la persistencia.',
+    description: 'Los plugins integran la versión embebida. La plataforma anfitriona gestiona el guardado y los permisos.',
   },
   {
-    name: 'Escritorio (Electron)',
+    name: 'Escritorio (embebida)',
     color: 'cyan',
     features: [
       'Instaladores para Windows, macOS y Linux',
-      'Editor estático integrado (sin backend)',
+      'Versión embebida integrada (sin backend)',
       'Actualizaciones automáticas',
       'Firma y notarización de binarios',
     ],
     deploy: 'npm run electron:pack',
     icon: 'monitor',
-    description: 'Aplicación de escritorio con acceso local a archivos y experiencia nativa.',
+    description: 'La aplicación de escritorio integra la versión embebida mediante Electron, con acceso a archivos locales.',
   },
 ];
 
@@ -89,7 +89,7 @@ export const FLOW_SYNC_STEPS = [
   },
   {
     title: "Propagación vía WebSocket",
-    description: "En modo online, el cliente envía deltas binarios Yjs al servidor.",
+    description: "En Cloud, el cliente envía actualizaciones binarias Yjs al servidor.",
     details: [
       "WebSocketProvider emite actualizaciones binarias",
       "Optimización por lotes (batch de updates)",
@@ -143,8 +143,8 @@ export const FLOW_ASSET_STEPS = [
     title: "Transferencia bajo demanda",
     description: "Los archivos se descargan solo cuando se necesitan, via REST API o desde el paquete local.",
     details: [
-      "Online: /api/projects/:projectId/assets",
-      "Static: resuelto desde el paquete .elpx local",
+      "Cloud: /api/projects/:projectId/assets",
+      "Online y embebida: desde el paquete .elpx local",
       "Respuestas HTTP cacheables",
     ],
     actor: "Server" as const,
@@ -199,7 +199,7 @@ export const INTEGRATIONS = [
     color: 'orange',
     logoColor: '#F98012',
     type: 'Edición y publicación web',
-    description: 'Módulo de Moodle para crear, editar y mostrar contenido web, con editor online o integrado.',
+    description: 'Módulo de Moodle para crear, editar y mostrar contenido web, con editor Cloud o la versión embebida.',
     features: [
       'Visualización directa del contenido en Moodle',
       'Validación de paquetes (ficheros obligatorios/prohibidos)',
@@ -239,7 +239,7 @@ export const AUTH_METHODS = [
   { name: 'CAS', desc: 'Inicio de sesión institucional' },
   { name: 'OpenID Connect', desc: 'Proveedor OIDC genérico' },
   { name: 'Invitado', desc: 'Acceso temporal sin registro' },
-  { name: 'Sin autenticación', desc: 'Modo estático o local' },
+  { name: 'Sin autenticación', desc: 'Versión Online o embebida; la plataforma puede exigir acceso' },
 ];
 
 // --- Mejoras clave de 4.0 ---

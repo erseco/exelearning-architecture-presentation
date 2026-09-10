@@ -29,8 +29,16 @@ Terminology follows the previously reviewed [eXeLearning source revision](https:
 
 - `public/app/yjs/AssetManager.js`: Cache API stores blobs, with IndexedDB fallback; `YjsDocumentManager.js` persists document state in IndexedDB.
 - `src/websocket/yjs-websocket.ts`: only the relay avoids a resident Y.Doc per room. `yjs-persistence.ts` reconstructs documents for loading and compaction.
-- `public/app/yjs/CollaborativeAutosaveManager.js`: autosave is conditional on online collaboration, not enabled in every runtime.
+- `public/app/yjs/CollaborativeAutosaveManager.js`: autosave is conditional on Cloud collaboration, not enabled in every runtime.
 - `src/db/dialect.ts`: Kysely builds typed SQL queries.
 - `doc/development/embedding.md`: OPEN_FILE and REQUEST_SAVE are actual embedding commands.
 
 These describe the reviewed development code; availability depends on the installed release.
+
+## Product terminology
+
+- **Online**: the browser version previously called static; it runs without an eXeLearning backend.
+- **Cloud**: the collaborative version with server-side services and persistence.
+- **Embedded**: the version integrated into platform plugins and the Electron desktop application. Slides use the Spanish label **embebida**.
+
+Technical identifiers such as `build-static`, file paths and source class names are unchanged. These product names follow the project owner's terminology.
