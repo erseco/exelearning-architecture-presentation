@@ -1,128 +1,271 @@
-// Pin evidence to the source revisions reviewed for this presentation.
-const core =
-  "https://github.com/exelearning/exelearning/blob/102d7d1cb3ae278a6025f1bf6c865713e622a37b/";
-export const SOURCES = {
-  stack: { label: "Tecnologías y compilación", url: core + "package.json" },
-  ui: {
-    label: "Interfaz del editor",
-    url: core + "views/workarea/workarea.njk",
-  },
-  document: {
-    label: "Modelo Yjs",
-    url: core + "public/app/yjs/YjsDocumentManager.js",
-  },
-  assets: {
-    label: "Almacenamiento de archivos",
-    url: core + "public/app/yjs/AssetManager.js",
-  },
-  relay: {
-    label: "Relé WebSocket",
-    url: core + "src/websocket/yjs-websocket.ts",
-  },
-  persistence: {
-    label: "Persistencia del servidor",
-    url: core + "src/websocket/yjs-persistence.ts",
-  },
-  autosave: {
-    label: "Autoguardado colaborativo",
-    url: core + "public/app/yjs/CollaborativeAutosaveManager.js",
-  },
-  embedding: {
-    label: "Protocolo de integración",
-    url: core + "doc/development/embedding.md",
-  },
-  desktop: { label: "Aplicación de escritorio", url: core + "app/main.js" },
-  database: {
-    label: "Acceso a bases de datos",
-    url: core + "src/db/dialect.ts",
-  },
-};
-export const MOODLE = [
+// --- Estructura Y.Doc ---
+export const CODE_YDOC_STRUCTURE = `Y.Doc {
+  // Jerarquía del documento
+  pages: Y.Array<Y.Map> [
+    {
+      id: 'page-uuid-1',
+      title: Y.Text('Introducción'),
+      boxes: Y.Array<Y.Map> [ ... ]
+    }
+  ],
+  
+  // Metadatos de assets (NO el blob)
+  assets: Y.Map {
+    'asset-uuid-1': {
+      filename: 'photo.jpg',
+      mimeType: 'image/jpeg',
+      size: 145234,
+      hash: 'sha256:abc123...'
+    }
+  }
+}`;
+
+// --- Modos de ejecución ---
+export const RUNTIME_MODES = [
   {
-    name: "mod_exeweb",
-    title: "Publicación web",
-    description:
-      "Crear y editar recursos con la navegación web de eXeLearning.",
-    grading: "Sin calificación de ejercicios",
-    editor: "Online remoto o integrado",
-    url: "https://github.com/exelearning/mod_exeweb/tree/2c386fb8685f502c44ce22d127f70e7143e4359c",
+    name: 'Server (Online)',
+    color: 'blue',
+    features: [
+      'API REST + WebSocket colaborativo',
+      'Multi-usuario con autenticación',
+      'Base de datos (SQLite / PG / MySQL)',
+      'Assets coordinados entre pares',
+    ],
+    deploy: 'docker run exelearning/exelearning',
+    icon: 'server',
+    description: 'Instalación multiusuario con colaboración en tiempo real y persistencia centralizada.',
   },
   {
-    name: "mod_exescorm",
-    title: "Actividad SCORM",
-    description:
-      "Crear y editar paquetes con reproducción y seguimiento SCORM.",
-    grading: "Calificación agregada",
-    editor: "Online remoto o integrado",
-    url: "https://github.com/exelearning/mod_exescorm/tree/8ef47fa4b75a533585b08ca8d7d463031f70e7a3",
+    name: 'Static (Offline)',
+    color: 'green',
+    features: [
+      'Sin servidor ni base de datos',
+      'Catálogo de iDevices y estilos integrado',
+      'Exportar/importar ficheros .elp / .elpx',
+    ],
+    deploy: 'make build-static',
+    icon: 'harddrive',
+    description: 'Editor funcional sin backend ni persistencia local. Ideal para uso individual o empaquetado.',
   },
   {
-    name: "mod_exelearning",
-    title: "Evaluación por iDevice",
-    description:
-      "Conservar la navegación nativa del ELPX e integrar su evaluación.",
-    grading: "Global o por iDevice evaluable",
-    editor: "Editor integrado",
-    url: "https://github.com/exelearning/moodle-mod_exelearning/tree/3b6a7cd45ca9b762189d5e7ebc8f953c4d939023",
+    name: 'Embebido (iframe)',
+    color: 'purple',
+    features: [
+      'Integrable en cualquier plataforma web',
+      'postMessage API (OPEN / SAVE)',
+      'Compatible con modo Online y Static',
+      'WordPress, Moodle, Omeka S y más',
+    ],
+    deploy: '<iframe src="…/exelearning/" />',
+    icon: 'layers',
+    description: 'Se incrusta en CMS/LMS externos. La plataforma anfitriona gestiona la persistencia.',
+  },
+  {
+    name: 'Escritorio (Electron)',
+    color: 'cyan',
+    features: [
+      'Instaladores para Windows, macOS y Linux',
+      'Modo static integrado (sin servidor)',
+      'Actualizaciones automáticas',
+      'Firma y notarización de binarios',
+    ],
+    deploy: 'npm run electron:pack',
+    icon: 'monitor',
+    description: 'Aplicación de escritorio con acceso local a archivos y experiencia nativa.',
   },
 ];
-export const PLATFORMS = [
+
+// --- Flujo de sincronización ---
+export const FLOW_SYNC_STEPS = [
   {
-    name: "WordPress",
-    code: "wp-exelearning",
-    purpose: "Publicar en la web",
-    stack: "PHP · JavaScript · REST API · Gutenberg",
-    detail:
-      "Biblioteca multimedia, editor embebido y publicación mediante bloque o shortcode.",
-    storage: "El servidor extrae y gestiona el contenido.",
-    url: "https://github.com/exelearning/wp-exelearning/tree/a770a75a22cbb7096b4a9e64f7864c1e9bdb5a25",
+    title: "Edición Local",
+    description: "El usuario edita contenido en el editor (TinyMCE, etc).",
+    details: [
+      "Y.Doc se actualiza en memoria (RAM del navegador)",
+      "Cambios persistidos en IndexedDB automáticamente",
+      "Undo/Redo local inmediato",
+    ],
+    actor: "Client" as const,
   },
   {
-    name: "Omeka S",
-    code: "omeka-s-exelearning",
-    purpose: "Catalogar recursos",
-    stack: "PHP · Laminas · JavaScript",
-    detail:
-      "Contenido asociado a ítems y medios, edición embebida y entrega mediante proxy.",
-    storage: "El servidor extrae y gestiona el contenido.",
-    url: "https://github.com/exelearning/omeka-s-exelearning/tree/8361c3a3876e57095fbaea321386c62af9a3c8c8",
+    title: "Propagación vía WebSocket",
+    description: "En modo online, el cliente envía deltas binarios Yjs al servidor.",
+    details: [
+      "WebSocketProvider emite actualizaciones binarias",
+      "Optimización por lotes (batch de updates)",
+    ],
+    actor: "Client" as const,
   },
   {
-    name: "Nextcloud",
-    code: "nextcloud-exelearning",
-    purpose: "Trabajar desde Files",
-    stack: "PHP · TypeScript · Vue 3 · fflate",
-    detail:
-      "Visor y editor integrados en Files. Un Service Worker sirve los recursos del visor.",
-    storage: "El visor descomprime el ZIP en el navegador.",
-    url: "https://github.com/exelearning/nextcloud-exelearning/tree/99ed39c64b709e15f9e806ba6388359de4352270",
+    title: "Relay sin estado",
+    description: "El servidor reenvía el mensaje binario a otros clientes de la misma sala sin decodificarlo.",
+    details: [
+      "Servidor NO interpreta ni almacena el Y.Doc en memoria",
+      "Broadcasting a sala 'project-{uuid}'",
+      "Redis opcional para coordinación multi-instancia",
+    ],
+    actor: "Server" as const,
+  },
+  {
+    title: "Merge automático (CRDT)",
+    description: "Los demás clientes reciben el delta y lo aplican. Yjs garantiza convergencia sin conflictos.",
+    details: [
+      "Y.applyUpdate(update) resuelve conflictos automáticamente",
+      "Cada cliente converge al mismo estado final",
+      "La UI se actualiza instantáneamente",
+    ],
+    actor: "Client" as const,
   },
 ];
-export const TECHNOLOGIES = [
-  [
-    "Interfaz",
-    "JavaScript · TinyMCE · Bootstrap · jQuery",
-    "Edición de texto, actividades e interfaz",
-  ],
-  ["Documento", "Yjs · y-websocket", "Estado compartido y sincronización"],
-  [
-    "Almacenamiento local",
-    "IndexedDB · Cache API",
-    "Documento y archivos del navegador",
-  ],
-  [
-    "Servicios online",
-    "TypeScript · Bun · Elysia",
-    "API HTTP, autenticación y WebSocket",
-  ],
-  [
-    "Persistencia",
-    "Kysely · SQLite / PostgreSQL / MySQL",
-    "Consultas SQL tipadas y datos del proyecto",
-  ],
-  [
-    "Plantillas y escritorio",
-    "Nunjucks · Electron",
-    "Páginas de la aplicación y empaquetado nativo",
-  ],
+
+// --- Flujo de assets ---
+export const FLOW_ASSET_STEPS = [
+  {
+    title: "Referencia en el documento",
+    description: "El documento Yjs solo almacena metadatos del asset (hash SHA-256, nombre, tipo MIME, tamaño).",
+    details: [
+      "Los binarios nunca viajan por el canal de sincronización Yjs",
+      "Content-addressable: mismo contenido = mismo ID global",
+    ],
+    actor: "Client" as const,
+  },
+  {
+    title: "Coordinación P2P",
+    description: "El servidor coordina qué cliente posee cada asset y enruta solicitudes entre pares.",
+    details: [
+      "Protocolo de awareness para presencia de assets",
+      "Sistema de prioridades: CRITICAL > HIGH > MEDIUM > LOW",
+      "Batching inteligente según prioridad",
+    ],
+    actor: "Server" as const,
+  },
+  {
+    title: "Transferencia bajo demanda",
+    description: "Los assets se descargan solo cuando se necesitan, via REST API o desde el paquete local.",
+    details: [
+      "Online: POST /api/assets/upload — GET /api/assets/:id",
+      "Static: resuelto desde el paquete .elpx local",
+      "Respuestas HTTP cacheables",
+    ],
+    actor: "Server" as const,
+  },
+  {
+    title: "Cache local persistente",
+    description: "El asset se almacena en IndexedDB para reutilización offline.",
+    details: [
+      "IndexedDB: store exelearning-assets-v2",
+      "Reutilización en sesiones posteriores sin conexión",
+      "Renderizado directo via Blob/Object URL",
+    ],
+    actor: "Client" as const,
+  },
+];
+
+// --- Ecosistema de integraciones ---
+export const INTEGRATIONS = [
+  {
+    name: 'WordPress',
+    plugin: 'wp-exelearning',
+    color: 'blue',
+    logoColor: '#21759B',
+    type: 'Subida + edición embebida',
+    description: 'Plugin para subir proyectos .elpx, gestionarlos desde WordPress y abrirlos en el editor embebido.',
+    features: [
+      'ELPX como contenido gestionable en WordPress',
+      'Bloque Gutenberg + shortcode',
+      'Editor embebido para abrir y editar el proyecto',
+      'Extracción automática de paquetes ZIP',
+    ],
+    useCase: 'Sitios educativos, blogs docentes, instituciones pequeñas',
+  },
+  {
+    name: 'Omeka S',
+    plugin: 'omeka-s-exelearning',
+    color: 'red',
+    logoColor: '#B5271F',
+    type: 'Subida + catálogo',
+    description: 'Módulo para subir proyectos .elpx, catalogarlos como objetos digitales y abrirlos con el editor embebido.',
+    features: [
+      'ELPX como media item con metadatos Dublin Core',
+      'API REST para carga, edición y guardado',
+      'Proxy seguro con CSP + sandbox en iframe',
+      'Editor accesible desde el panel de administración',
+    ],
+    useCase: 'Museos, bibliotecas, archivos digitales, humanidades',
+  },
+  {
+    name: 'Moodle (exeweb)',
+    plugin: 'mod_exeweb',
+    color: 'orange',
+    logoColor: '#F98012',
+    type: 'Visualización web',
+    description: 'Módulo de actividad Moodle para abrir contenidos .elpx en modo web.',
+    features: [
+      'Visualización directa del contenido en Moodle',
+      'Validación de paquetes (ficheros obligatorios/prohibidos)',
+      'Plantillas predefinidas para nuevas actividades',
+    ],
+    useCase: 'Instituciones educativas con Moodle y eXeLearning Online',
+  },
+  {
+    name: 'Moodle (exescorm)',
+    plugin: 'mod_exescorm',
+    color: 'orange',
+    logoColor: '#F98012',
+    type: 'SCORM evaluable',
+    description: 'Módulo de actividad Moodle que genera SCORM 1.2/2004 para seguimiento y calificación dentro de Moodle.',
+    features: [
+      'Salida en formato SCORM estándar',
+      'Tracking de progreso del alumno integrado en Moodle',
+      'Seguimiento y calificación dentro de Moodle',
+    ],
+    useCase: 'Interoperabilidad entre plataformas, estándares e-learning',
+  },
+];
+
+// --- Formatos de exportación ---
+export const EXPORT_FORMATS = [
+  { name: 'ELPX', desc: 'Proyecto nativo eXeLearning 4.0', icon: '💾' },
+  { name: 'HTML5', desc: 'Sitio web autónomo navegable', icon: '🌐' },
+  { name: 'SCORM 1.2', desc: 'Estándar e-learning (legacy)', icon: '📦' },
+  { name: 'SCORM 2004', desc: 'Estándar e-learning avanzado', icon: '📦' },
+  { name: 'IMS CP', desc: 'IMS Content Package', icon: '📋' },
+  { name: 'ePub3', desc: 'Libro electrónico para e-readers', icon: '📚' },
+];
+
+// --- Métodos de autenticación ---
+export const AUTH_METHODS = [
+  { name: 'Contraseña local', desc: 'Email + password con bcrypt' },
+  { name: 'CAS', desc: 'SSO institucional (universidades)' },
+  { name: 'OpenID Connect', desc: 'Proveedor OIDC genérico' },
+  { name: 'Invitado', desc: 'Acceso temporal sin registro' },
+  { name: 'Sin autenticación', desc: 'Modo offline / static' },
+];
+
+// --- Mejoras clave de 4.0 ---
+export const KEY_IMPROVEMENTS = [
+  {
+    title: 'Permisos por documento',
+    desc: 'Control de acceso más fino por proyecto, documento y contenido, con roles claros.',
+  },
+  {
+    title: 'Multidocumento simultáneo',
+    desc: 'Varios documentos abiertos a la vez, con edición paralela sin bloquear el trabajo.',
+  },
+  {
+    title: 'Media Library',
+    desc: 'Biblioteca de medios integrada para reutilizar assets y ver metadatos dentro del editor.',
+  },
+  {
+    title: 'Validador de enlaces',
+    desc: 'Detecta enlaces rotos y ayuda a publicar contenido más limpio y consistente.',
+  },
+  {
+    title: 'Optimizador de imágenes',
+    desc: 'Reduce fricción al subir y publicar assets visuales, con mejor tratamiento de archivos.',
+  },
+  {
+    title: 'Rendimiento',
+    desc: 'Arranque más ágil, edición más fluida y respuesta general mejorada.',
+  },
 ];
