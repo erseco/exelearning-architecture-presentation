@@ -192,13 +192,13 @@ const SlidePrinciples = () => (
       <FeatureCard
         icon={HardDrive}
         title="Sincronización y guardado"
-        desc="La sincronización comparte cambios. El guardado conserva el proyecto; las sesiones colaborativas online también disponen de autoguardado."
+        desc="La sincronización comparte cambios. El guardado conserva el proyecto; las sesiones colaborativas de Cloud también disponen de autoguardado."
         accent="green"
       />
       <FeatureCard
         icon={Share2}
         title="Misma base, múltiples despliegues"
-        desc="El editor funciona con servicios online o como aplicación estática. Un iframe permite integrarlo en otras plataformas y Electron lo empaqueta para escritorio."
+        desc="Online ejecuta el editor en el navegador. Cloud añade colaboración y guardado en servidor. Los plugins y la aplicación de escritorio integran la versión embebida."
         accent="orange"
       />
     </div>
@@ -252,7 +252,7 @@ const SlideArchitecture = () => (
         </div>
 
         <div className="bg-slate-800/40 rounded-2xl border border-purple-500/30 p-5">
-          <div className="text-xs font-bold uppercase tracking-wider text-purple-300 mb-3">Servidor coordinador</div>
+          <div className="text-xs font-bold uppercase tracking-wider text-purple-300 mb-3">Servidor de Cloud</div>
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-purple-900/20 border border-purple-500/20 rounded-lg p-3">
               <div className="text-xs font-bold text-purple-300 uppercase mb-1">Relay WS</div>
@@ -303,7 +303,7 @@ const SlideClient = () => (
         </div>
         <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
           <h4 className="text-amber-300 font-mono font-bold mb-1">Sincronización</h4>
-          <p className="text-sm text-slate-400">La sincronización con el servidor es continua vía WebSocket, pero el documento sigue viviendo primero en el navegador.</p>
+          <p className="text-sm text-slate-400">En Cloud, WebSocket sincroniza los cambios entre usuarios. El estado de edición se mantiene en el navegador.</p>
         </div>
       </div>
       <div className="space-y-4">
@@ -336,7 +336,7 @@ const SlideClient = () => (
 
 // SLIDE 6: Servidor
 const SlideServer = () => (
-  <SlideContainer title="Servidor: API, colaboración y guardado" icon={Server} subtitle="Elysia sobre Bun. Gestiona autenticación, sincronización y persistencia del proyecto.">
+  <SlideContainer title="Cloud: API, colaboración y guardado" icon={Server} subtitle="Elysia sobre Bun. Gestiona autenticación, sincronización y persistencia del proyecto.">
     <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-8 h-full content-center">
       <div>
         <BackendDiagram />
@@ -436,7 +436,7 @@ const SlideSync = () => (
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-white font-bold mb-2">Sincronizar y guardar</h4>
           <p className="text-sm text-slate-400">
-            Hay guardado manual y autoguardado online tras la participación de otro colaborador. Este último no se activa en modo estático ni en escritorio.
+            Cloud permite guardado manual y autoguardado tras la participación de otro colaborador. Este autoguardado no se activa en Online ni en la versión embebida.
           </p>
         </div>
         <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-4">
@@ -459,7 +459,7 @@ const SlideRuntimeModes = () => {
     cyan:   { border: 'border-cyan-500/50',   badge: 'bg-cyan-600',   icon: 'text-cyan-400'   },
   };
   return (
-    <SlideContainer title="Modos de Ejecución" icon={Layers} subtitle="Ejecución online o estática, integración mediante iframe y aplicación de escritorio.">
+    <SlideContainer title="Modos de Ejecución" icon={Layers} subtitle="Online para editar en el navegador, Cloud para colaborar y versión embebida en plugins y escritorio.">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-start">
         {RUNTIME_MODES.map(mode => {
           const colors = colorMap[mode.color];
@@ -593,7 +593,7 @@ const SlideFeatures = () => (
             'iDevices interactivos extensibles',
             'ES, CA, EU, GL, VA, EO, EN',
             'Temas personalizables',
-            'Instalación online de iDevices y estilos',
+            'Descarga de iDevices y estilos',
           ].map(m => (
             <li key={m} className="flex gap-2 items-center"><CheckCircle2 size={12} className="text-amber-500/70 flex-shrink-0" />{m}</li>
           ))}
@@ -673,7 +673,7 @@ const SlideClosure = () => (
       {[
         { label: 'Edición en el navegador', desc: 'Estado de edición local', icon: Globe },
         { label: 'Colaborativo', desc: 'Yjs CRDTs en tiempo real', icon: Users },
-        { label: 'Multi-despliegue', desc: 'Server · Static · Embebido · Desktop', icon: Layers },
+        { label: 'Multi-despliegue', desc: 'Online · Cloud · Embebida', icon: Layers },
         { label: 'Ecosistema', desc: 'WordPress · Moodle · Omeka S', icon: ExternalLink },
       ].map(item => (
         <div key={item.label} className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-center">

@@ -54,7 +54,7 @@ export const HierarchyDiagram = () => {
       {/* SERVER */}
       <div className="w-full bg-slate-800/50 rounded-2xl border-2 border-purple-500/50 p-6 relative opacity-80">
         <div className="absolute -top-3 left-6 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          Servidor (Persistencia)
+          Cloud (Persistencia)
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-12 py-4">
@@ -96,7 +96,7 @@ export const BackendDiagram = () => {
             {/* Title */}
             <div className="flex items-center gap-3 mb-8 bg-slate-800 px-6 py-2 rounded-full border border-slate-600 shadow-xl">
                <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-               <span className="font-bold text-slate-200">Elysia + Bun Server</span>
+               <span className="font-bold text-slate-200">Cloud: Elysia + Bun</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
