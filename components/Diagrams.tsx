@@ -8,7 +8,7 @@ export const HierarchyDiagram = () => {
       {/* CLIENTE */}
       <div className="w-full bg-slate-800/50 rounded-2xl border-2 border-blue-500/50 p-6 relative">
         <div className="absolute -top-3 left-6 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          Prioridad 1: Cliente (Edición)
+          Cliente (Edición)
         </div>
         
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 py-4">
@@ -24,7 +24,7 @@ export const HierarchyDiagram = () => {
           {/* Arrows */}
           <div className="flex flex-col items-center gap-1">
              <ArrowLeftRight size={24} className="text-slate-500 animate-pulse" />
-             <span className="text-[10px] text-slate-500 uppercase font-bold">Sync &lt; 100ms</span>
+             <span className="text-[10px] text-slate-500 uppercase font-bold">Almacenamiento local</span>
           </div>
 
           {/* Cache API */}
@@ -48,13 +48,13 @@ export const HierarchyDiagram = () => {
       <div className="flex flex-col items-center text-slate-500">
         <div className="h-12 w-0.5 bg-gradient-to-b from-blue-500/50 to-purple-500/50"></div>
         <ArrowDown size={24} className="text-slate-600" />
-        <span className="text-xs bg-slate-900 px-2 py-1 rounded border border-slate-800 mt-2">Solo al Guardar (Manual)</span>
+        <span className="text-xs bg-slate-900 px-2 py-1 rounded border border-slate-800 mt-2">Guardado manual o colaborativo</span>
       </div>
 
       {/* SERVER */}
       <div className="w-full bg-slate-800/50 rounded-2xl border-2 border-purple-500/50 p-6 relative opacity-80">
         <div className="absolute -top-3 left-6 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          Prioridad 2: Servidor (Backup)
+          Servidor (Persistencia)
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-12 py-4">
@@ -102,7 +102,7 @@ export const BackendDiagram = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                <div className="bg-indigo-900/20 border border-indigo-500/40 p-4 rounded-lg">
                   <div className="flex items-center justify-between text-indigo-300 mb-2">
-                     <span className="font-mono font-bold">Relay Yjs</span>
+                     <span className="font-mono font-bold">Relé Yjs</span>
                      <Wifi size={18} />
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
@@ -126,7 +126,7 @@ export const BackendDiagram = () => {
                      <Server size={18} />
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                     Guarda proyectos, assets y metadatos en BD y disco. El servidor coordina, no edita.
+                     Guarda proyectos, archivos y metadatos en BD y disco. El servidor coordina, no edita.
                   </p>
                </div>
             </div>

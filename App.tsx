@@ -6,7 +6,7 @@ import {
   CheckCircle2, ChevronLeft, ChevronRight as ChevronRightIcon,
   Layers, Package, Shield, Globe, Monitor, Terminal,
   BookOpen,
-  Users, LayoutDashboard, ExternalLink
+  Users, LayoutDashboard, ExternalLink, Sun, Moon
 } from 'lucide-react';
 import { BackendDiagram } from './components/Diagrams';
 import {
@@ -95,11 +95,11 @@ const SlideHero = () => (
     </h1>
     <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed mb-8">
       Herramienta libre de autoría educativa.<br />
-      <span className="text-slate-300">Browser-first</span>, colaborativa en tiempo real,
+      <span className="text-slate-300">Edición en el navegador</span>, colaborativa en tiempo real,
       con múltiples modos de despliegue e integración con <span className="text-slate-300">WordPress</span>, <span className="text-slate-300">Moodle</span> y <span className="text-slate-300">Omeka S</span>.
     </p>
     <div className="flex flex-wrap justify-center gap-2 mb-8">
-      {['Browser-first', 'Colaboración Yjs', 'Multi-DB', 'Embebible', 'Electron Desktop', 'SCORM · HTML5 · ePub3'].map(tag => (
+      {['Edición en el navegador', 'Colaboración Yjs', 'Varias bases de datos', 'Integrable', 'Escritorio con Electron', 'SCORM · HTML5 · ePub3'].map(tag => (
         <span key={tag} className="px-3 py-1 rounded-full text-xs bg-slate-800 border border-slate-700 text-slate-300">{tag}</span>
       ))}
     </div>
@@ -150,7 +150,7 @@ const SlideWhatIs = () => (
             </div>
             <div className="rounded-xl border border-green-500/30 bg-green-950/25 p-4">
               <div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-2">4.0</div>
-              <div className="text-sm text-slate-200 font-semibold mb-2">Browser-first colaborativo</div>
+              <div className="text-sm text-slate-200 font-semibold mb-2">Edición en el navegador colaborativo</div>
               <div className="text-xs text-slate-400 leading-relaxed">Yjs + Elysia (Bun), despliegues múltiples y ecosistema de plugins e integraciones.</div>
             </div>
           </div>
@@ -180,25 +180,25 @@ const SlidePrinciples = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full content-center">
       <FeatureCard
         icon={WifiOff}
-        title="Browser-First"
-        desc="El navegador es la fuente de verdad durante la sesión. La edición ocurre en memoria (Y.Doc) y los assets se persisten en IndexedDB para continuidad local."
+        title="Edición en el navegador"
+        desc="La edición ocurre en memoria (Y.Doc). IndexedDB conserva el documento y Cache API almacena los archivos, con IndexedDB como alternativa."
       />
       <FeatureCard
         icon={Server}
-        title="Servidor sin estado"
-        desc="El backend no almacena ni interpreta el Y.Doc en memoria. Actúa como relay de WebSocket, coordinador de assets y punto de persistencia. Permite escalar horizontalmente."
+        title="Servicios del servidor"
+        desc="El servidor gestiona acceso, archivos y guardado. El relé WebSocket reenvía cambios sin mantener un documento Yjs por sala."
         accent="purple"
       />
       <FeatureCard
         icon={HardDrive}
-        title="Guardado explícito, sync desacoplado"
-        desc="La sincronización entre pares es automática y continua. Pero el guardado a servidor es una acción manual del usuario. Esto separa colaboración de persistencia."
+        title="Sincronización y guardado"
+        desc="La sincronización comparte cambios. El guardado conserva el proyecto; las sesiones colaborativas online también disponen de autoguardado."
         accent="green"
       />
       <FeatureCard
         icon={Share2}
         title="Misma base, múltiples despliegues"
-        desc="El mismo código fuente se compila para servidor multi-usuario, build estático offline, iframe embebido en CMS/LMS, o aplicación de escritorio con Electron."
+        desc="El editor funciona con servicios online o como aplicación estática. Un iframe permite integrarlo en otras plataformas y Electron lo empaqueta para escritorio."
         accent="orange"
       />
     </div>
@@ -221,13 +221,13 @@ const SlideArchitecture = () => (
               </div>
             </div>
             <p className="text-xs text-slate-400 mt-3 leading-relaxed">
-              Estructura CRDT que contiene páginas, cajas de contenido y metadatos de assets. Cada edición se aplica en tiempo real y converge sin conflictos.
+              Estructura CRDT que contiene páginas, bloques de contenido y metadatos de archivos. Cada edición se aplica en tiempo real y combina los cambios automáticamente.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-3">
             <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-3">
               <div className="text-xs font-bold text-emerald-300 uppercase mb-1">IndexedDB</div>
-              <div className="text-xs text-slate-400">Persistencia local de assets y recuperación offline de la sesión.</div>
+              <div className="text-xs text-slate-400">Estado del documento. Los archivos se almacenan en Cache API, con IndexedDB como alternativa.</div>
             </div>
             <div className="bg-cyan-900/20 border border-cyan-500/20 rounded-lg p-3">
               <div className="text-xs font-bold text-cyan-300 uppercase mb-1">WebSocket</div>
@@ -239,10 +239,10 @@ const SlideArchitecture = () => (
         <div className="bg-slate-900/60 rounded-2xl border border-slate-700 p-5 flex flex-col justify-center">
           <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">Cómo fluye</div>
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-blue-400" /> El navegador mantiene la autoridad del documento</div>
-            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-purple-400" /> El servidor no guarda el Y.Doc en RAM</div>
-            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-green-400" /> La persistencia llega por guardado explícito</div>
-            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-orange-400" /> Los assets viajan por un canal separado</div>
+            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-blue-400" /> El navegador mantiene el estado de edición</div>
+            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-purple-400" /> El relé no mantiene un Y.Doc por sala</div>
+            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-green-400" /> Guardado manual o autoguardado colaborativo</div>
+            <div className="flex items-center gap-2 text-xs text-slate-300"><span className="w-2 h-2 rounded-full bg-orange-400" /> Los archivos viajan por un canal separado</div>
           </div>
           <div className="mt-4 rounded-xl border border-slate-700 bg-slate-800/70 p-4">
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -276,7 +276,7 @@ const SlideArchitecture = () => (
 
       {/* Tech badges */}
       <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-500 justify-center">
-        {['Bun Runtime', 'Elysia Framework', 'Kysely ORM', 'Yjs CRDT', 'Bootstrap 5', 'Nunjucks', 'Biome', 'Vitest + Playwright', 'Docker', 'Redis (multi-instancia)'].map(t => (
+        {['Bun (ejecución)', 'Elysia (API web)', 'Kysely (consultas SQL tipadas)', 'Yjs CRDT', 'Bootstrap 5', 'Nunjucks', 'Biome', 'Vitest + Playwright', 'Docker', 'Redis (multi-instancia)'].map(t => (
           <span key={t} className="bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">{t}</span>
         ))}
       </div>
@@ -286,20 +286,20 @@ const SlideArchitecture = () => (
 
 // SLIDE 5: Cliente
 const SlideClient = () => (
-  <SlideContainer title="Cliente: el navegador como fuente de verdad" icon={Globe} subtitle="Todo el estado de edición vive en el navegador. El servidor solo interviene para coordinar y persistir.">
+  <SlideContainer title="Cliente: edición en el navegador" icon={Globe} subtitle="Todo el estado de edición vive en el navegador. El servidor solo interviene para coordinar y persistir.">
     <div className="grid md:grid-cols-2 gap-8 h-full content-center">
       <div className="space-y-4">
         <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
           <h4 className="text-blue-300 font-mono font-bold mb-1">Y.Doc (Memoria RAM)</h4>
-          <p className="text-sm text-slate-400">Estructura CRDT que contiene páginas, cajas de contenido y metadatos de assets. Cada edición se aplica en RAM y converge sin conflictos.</p>
+          <p className="text-sm text-slate-400">Estructura CRDT que contiene páginas, bloques de contenido y metadatos de archivos. Cada edición se aplica en RAM y combina los cambios automáticamente.</p>
         </div>
         <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
-          <h4 className="text-emerald-300 font-mono font-bold mb-1">IndexedDB (exelearning-assets-v2)</h4>
-          <p className="text-sm text-slate-400">Almacén persistente del navegador para binarios. Guarda blobs, hash SHA-256, tipo MIME y estado de subida para reabrir proyectos sin perder assets.</p>
+          <h4 className="text-emerald-300 font-mono font-bold mb-1">IndexedDB</h4>
+          <p className="text-sm text-slate-400">Almacena el estado del documento Yjs en el navegador. También sirve como alternativa para archivos si Cache API no está disponible.</p>
         </div>
         <div className="bg-slate-800 p-5 rounded-lg border border-slate-700">
           <h4 className="text-cyan-300 font-mono font-bold mb-1">Cache API</h4>
-          <p className="text-sm text-slate-400">Cachea respuestas y recursos estáticos del editor para arranque rápido y mejor continuidad cuando la conexión es inestable.</p>
+          <p className="text-sm text-slate-400">Almacena los archivos del proyecto en el navegador. Los binarios se mantienen separados de la estructura del documento.</p>
         </div>
         <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
           <h4 className="text-amber-300 font-mono font-bold mb-1">Sincronización</h4>
@@ -312,21 +312,21 @@ const SlideClient = () => (
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
               <div className="w-24 text-xs font-bold text-blue-400 mt-0.5 flex-shrink-0">Y.Doc</div>
-              <div className="text-slate-300">Páginas, cajas de contenido y referencias a assets. Es el estado activo del proyecto.</div>
+              <div className="text-slate-300">Páginas, bloques de contenido y referencias a archivos. Es el estado activo del proyecto.</div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-24 text-xs font-bold text-emerald-400 mt-0.5 flex-shrink-0">IndexedDB</div>
-              <div className="text-slate-300">Blobs y estado local para reabrir proyectos sin depender del servidor.</div>
+              <div className="text-slate-300">Estado local del documento; archivos como alternativa a Cache API.</div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-24 text-xs font-bold text-cyan-400 mt-0.5 flex-shrink-0">Servidor</div>
-              <div className="text-slate-300">Solo metadatos, persistencia y coordinación entre clientes.</div>
+              <div className="text-slate-300">Proyectos guardados, archivos y coordinación entre clientes.</div>
             </div>
           </div>
         </div>
         <div className="bg-blue-900/20 border border-blue-500/20 p-4 rounded-lg">
           <p className="text-xs text-blue-200/70 leading-relaxed">
-            <strong className="text-blue-300">Idea clave:</strong> el documento cambia en memoria, los binarios se guardan aparte y el navegador siempre conserva la primera copia útil.
+            <strong className="text-blue-300">Idea clave:</strong> el documento cambia en memoria, los binarios se guardan aparte y guardar el proyecto permite conservarlo fuera de la sesión.
           </p>
         </div>
       </div>
@@ -336,7 +336,7 @@ const SlideClient = () => (
 
 // SLIDE 6: Servidor
 const SlideServer = () => (
-  <SlideContainer title="Servidor: coordinador sin estado" icon={Server} subtitle="Elysia sobre Bun. No interpreta ni almacena el Y.Doc en memoria. Su papel es relé, autenticación y persistencia.">
+  <SlideContainer title="Servidor: API, colaboración y guardado" icon={Server} subtitle="Elysia sobre Bun. Gestiona autenticación, sincronización y persistencia del proyecto.">
     <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-8 h-full content-center">
       <div>
         <BackendDiagram />
@@ -352,7 +352,7 @@ const SlideServer = () => (
         </div>
         <div className="bg-slate-800/40 border border-slate-700 rounded-xl p-4">
           <p className="text-xs text-slate-400 leading-relaxed">
-            El servidor no es dueño del contenido. Solo coordina sesiones, assets y persistencia para que varios navegadores trabajen sobre el mismo proyecto.
+            El relé reenvía cambios entre navegadores. Los servicios de persistencia sí reconstruyen documentos Yjs para cargar o compactar datos.
           </p>
         </div>
       </div>
@@ -360,18 +360,18 @@ const SlideServer = () => (
   </SlideContainer>
 );
 
-// SLIDE 7: Persistencia y Assets
+// SLIDE 7: Guardado y archivos
 const SlideAssets = () => (
-  <SlideContainer title="Persistencia y Assets" icon={FileJson} subtitle="El documento guarda estructura y metadatos; los binarios viven fuera del Y.Doc. Eso evita bloquear la edición.">
+  <SlideContainer title="Guardado y archivos" icon={FileJson} subtitle="El documento guarda estructura y metadatos; los binarios viven fuera del Y.Doc. Eso evita bloquear la edición.">
     <div className="grid lg:grid-cols-2 gap-8 h-full content-center">
       <div className="space-y-4">
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-blue-300 font-mono font-bold mb-1">1. Documento</h4>
-          <p className="text-sm text-slate-400">Yjs mantiene páginas, cajas y referencias a assets. Solo guarda metadatos, no ficheros binarios.</p>
+          <p className="text-sm text-slate-400">Yjs mantiene páginas, cajas y referencias a archivos. Solo guarda metadatos, no ficheros binarios.</p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-emerald-300 font-mono font-bold mb-1">2. Binarios</h4>
-          <p className="text-sm text-slate-400">Las imágenes y vídeos se guardan en IndexedDB en el navegador y en disco/BD en el servidor.</p>
+          <p className="text-sm text-slate-400">Las imágenes y vídeos se guardan en Cache API (o IndexedDB) en el navegador y en disco en el servidor; la BD conserva metadatos.</p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <h4 className="text-amber-300 font-mono font-bold mb-1">3. Sin duplicados</h4>
@@ -384,7 +384,7 @@ const SlideAssets = () => (
             <Database size={18} className="text-emerald-400" /> Mapa rápido de capas
           </h4>
           <div className="space-y-2 text-sm text-slate-300">
-            <div><strong className="text-blue-300">Cliente:</strong> IndexedDB cachea blobs y estado local.</div>
+            <div><strong className="text-blue-300">Cliente:</strong> IndexedDB conserva el documento; Cache API almacena los archivos.</div>
             <div><strong className="text-purple-300">Servidor:</strong> persiste archivos y metadatos del proyecto.</div>
             <div><strong className="text-green-300">BD:</strong> conserva referencias, autoría y trazabilidad.</div>
           </div>
@@ -401,48 +401,48 @@ const SlideAssets = () => (
 
 // SLIDE 8: Sincronización y Colaboración
 const SlideSync = () => (
-  <SlideContainer title="Sincronización y Colaboración" icon={RefreshCw} subtitle="Yjs CRDTs + WebSocket relay sin estado. Convergencia automática sin conflictos.">
+  <SlideContainer title="Sincronización y Colaboración" icon={RefreshCw} subtitle="Yjs combina los cambios del documento y WebSocket los transmite entre usuarios.">
     <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8">
       <div className="space-y-4">
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
           <p className="text-slate-400 text-sm leading-relaxed">
-            <strong className="text-slate-200">Yjs</strong> sincroniza el documento como deltas binarios. El navegador edita primero, el servidor solo reenvía cambios y varios usuarios terminan en el mismo estado.
+            <strong className="text-slate-200">Yjs</strong> sincroniza el documento como actualizaciones binarias. El navegador edita primero, el relé reenvía cambios y varios usuarios terminan en el mismo estado.
           </p>
         </div>
         <div className="grid gap-3">
           <div className="bg-blue-900/20 border border-blue-500/20 rounded-xl p-4">
             <div className="text-xs font-bold uppercase tracking-wider text-blue-300 mb-1">1. Edita en el navegador</div>
-            <div className="text-sm text-slate-300">Cada cambio toca el `Y.Doc` local y se ve al instante.</div>
+            <div className="text-sm text-slate-300">Cada cambio actualiza el documento Yjs local y se ve al instante.</div>
           </div>
           <div className="bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-4">
             <div className="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-1">2. Se transmite por WebSocket</div>
-            <div className="text-sm text-slate-300">El servidor reenvía el delta binario a los demás clientes sin interpretarlo.</div>
+            <div className="text-sm text-slate-300">El servidor reenvía el cambio binario a los demás clientes sin interpretarlo.</div>
           </div>
           <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-1">3. Yjs converge sin conflictos</div>
-            <div className="text-sm text-slate-300">Si hay ediciones simultáneas, CRDT resuelve el merge automáticamente.</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-green-300 mb-1">3. Yjs combina los cambios</div>
+            <div className="text-sm text-slate-300">Yjs combina las ediciones simultáneas para que los clientes converjan al mismo estado.</div>
           </div>
         </div>
       </div>
       <div className="space-y-4">
         <div className="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-indigo-500/20 rounded-xl p-5">
           <h4 className="text-white font-bold mb-3 flex items-center gap-2">
-            <Network size={18} className="text-indigo-400" /> Relay sin estado
+            <Network size={18} className="text-indigo-400" /> Relé WebSocket
           </h4>
           <p className="text-sm text-slate-300 leading-relaxed">
-            El servidor no decodifica el contenido ni guarda el documento. Solo hace de puente entre navegadores conectados.
+            El relé no mantiene un documento Yjs por sala. El servidor dispone de otros servicios para guardar y recuperar proyectos.
           </p>
         </div>
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
-          <h4 className="text-white font-bold mb-2">Sync ≠ Save</h4>
+          <h4 className="text-white font-bold mb-2">Sincronizar y guardar</h4>
           <p className="text-sm text-slate-400">
-            La colaboración es continua; el guardado a servidor sigue siendo una acción explícita para persistir el proyecto.
+            Hay guardado manual y autoguardado online tras la participación de otro colaborador. Este último no se activa en modo estático ni en escritorio.
           </p>
         </div>
         <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-4">
-          <h4 className="text-white font-bold mb-2">Escala bien</h4>
+          <h4 className="text-white font-bold mb-2">Coordinación entre servidores</h4>
           <p className="text-sm text-slate-300">
-            Sin estado en memoria y con Redis opcional, el relay puede crecer horizontalmente.
+            Redis permite coordinar varios relés. Las conexiones y los permisos siguen gestionándose en el servidor.
           </p>
         </div>
       </div>
@@ -459,7 +459,7 @@ const SlideRuntimeModes = () => {
     cyan:   { border: 'border-cyan-500/50',   badge: 'bg-cyan-600',   icon: 'text-cyan-400'   },
   };
   return (
-    <SlideContainer title="Modos de Ejecución" icon={Layers} subtitle="El mismo código fuente soporta cuatro modos de despliegue, cada uno optimizado para un contexto diferente.">
+    <SlideContainer title="Modos de Ejecución" icon={Layers} subtitle="Ejecución online o estática, integración mediante iframe y aplicación de escritorio.">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-start">
         {RUNTIME_MODES.map(mode => {
           const colors = colorMap[mode.color];
@@ -671,7 +671,7 @@ const SlideClosure = () => (
 
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mb-10">
       {[
-        { label: 'Browser-first', desc: 'Cliente como fuente de verdad', icon: Globe },
+        { label: 'Edición en el navegador', desc: 'Estado de edición local', icon: Globe },
         { label: 'Colaborativo', desc: 'Yjs CRDTs en tiempo real', icon: Users },
         { label: 'Multi-despliegue', desc: 'Server · Static · Embebido · Desktop', icon: Layers },
         { label: 'Ecosistema', desc: 'WordPress · Moodle · Omeka S', icon: ExternalLink },
@@ -713,6 +713,18 @@ const SlideClosure = () => (
 
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() =>
+    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+  );
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem('presentation-theme', theme);
+    } catch {
+      // The toggle still works when browser storage is unavailable.
+    }
+  }, [theme]);
 
   const slides = [
     { component: <SlideHero />, id: 'hero' },
@@ -742,6 +754,8 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Let focused controls handle Space and other keys themselves.
+      if (e.target instanceof HTMLElement && e.target.closest('button, a, input, textarea, select, [contenteditable]')) return;
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
         nextSlide();
@@ -784,6 +798,16 @@ export default function App() {
 
         <div className="flex items-center gap-2">
           <button
+            type="button"
+            onClick={() => setTheme(value => value === 'dark' ? 'light' : 'dark')}
+            aria-label={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+            title={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+            className="theme-toggle p-2 rounded-lg hover:bg-slate-800 text-slate-300"
+          >
+            {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+          </button>
+          <button
+            aria-label="Diapositiva anterior"
             onClick={prevSlide}
             disabled={currentSlide === 0}
             className="p-2 rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-slate-300"
@@ -791,6 +815,7 @@ export default function App() {
             <ChevronLeft size={24} />
           </button>
           <button
+            aria-label="Diapositiva siguiente"
             onClick={nextSlide}
             disabled={currentSlide === totalSlides - 1}
             className="p-2 rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-slate-300"
