@@ -1,38 +1,20 @@
-# eXeLearning architecture presentation
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-A Spanish-language, ten-slide presentation of eXeLearning's browser editor, online services and platform integrations. Built with React, TypeScript and Vite.
+# Run and deploy your AI Studio app
 
-## Run locally
+This contains everything you need to run your app locally.
 
-Use Node.js 22.12+ or 24 LTS and npm:
+View your app in AI Studio: https://ai.studio/apps/drive/15Nl0aUpc0ImmJJLpPcp6q-XhjrkH-7FP
 
-```sh
-npm ci
-npm run dev
-```
+## Run Locally
 
-## Build
+**Prerequisites:**  Node.js
 
-```sh
-npm run build
-npm run preview
-```
 
-The build type-checks the project and generates `dist/`. Relative asset URLs preserve compatibility with GitHub Pages repository paths. Styling is bundled locally; the presentation does not load a CSS framework or JavaScript modules from a CDN.
-
-## Navigation
-
-- Previous/next buttons and slide indicators work with keyboard and touch.
-- Arrow keys, Page Up/Page Down and Space move between slides.
-- Home and End move to the first and last slide.
-- Shortcuts do not intercept focused links, buttons or form controls.
-- Long slides scroll on small screens and at enlarged text sizes.
-- Motion respects the operating system's reduced-motion preference.
-
-## Content and evidence
-
-`content.ts` contains technology comparisons, plugin details and source links pinned to the reviewed commits. `App.tsx` contains the slide narrative and semantic diagrams. `index.css` defines the responsive presentation design.
-
-See [SOURCES.md](SOURCES.md) for the review scope and architectural distinctions. These source snapshots describe development revisions, not a guarantee that every feature is available in a particular published release.
-
-The application's React/Vite dependencies are presentation tooling, not the eXeLearning editor's frontend stack.
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
