@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply the saved theme before rendering to avoid a dark flash.
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('presentation-theme') === 'light' ? 'light' : 'dark';
+      } catch {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
     <title>Arquitectura de eXeLearning 4.0</title>
     <!-- Mantenemos Tailwind CDN por simplicidad para no requerir PostCSS config, 
          pero React ahora se compila via Vite -->
@@ -44,7 +52,6 @@
       ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
 
-<link rel="stylesheet" href="/index.css">
   <script type="importmap">
 {
   "imports": {
@@ -57,7 +64,8 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="./assets/index-D5Upm06t.js"></script>
+  <script type="module" crossorigin src="./assets/index-C4aqqcWE.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D7DuxN0O.css">
 </head>
   <body>
     <div id="root"></div>
