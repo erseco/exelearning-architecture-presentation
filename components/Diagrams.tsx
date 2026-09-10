@@ -33,14 +33,14 @@ export const HierarchyDiagram = () => {
               <Database size={40} className="text-emerald-300" />
             </div>
             <div className="mt-3 font-mono text-emerald-200 font-bold">Cache API</div>
-            <div className="text-xs text-slate-400 mt-1">Assets locales cacheados</div>
+            <div className="text-xs text-slate-400 mt-1">Archivos guardados en el navegador</div>
           </div>
         </div>
 
         <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs text-slate-400 bg-slate-900/50 p-3 rounded-lg">
            <span>✓ Edición Instantánea</span>
            <span>✓ Undo/Redo Local</span>
-           <span>✓ Auto-Sync</span>
+           <span>✓ Cambios compartidos</span>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export const HierarchyDiagram = () => {
       {/* SERVER */}
       <div className="w-full bg-slate-800/50 rounded-2xl border-2 border-purple-500/50 p-6 relative opacity-80">
         <div className="absolute -top-3 left-6 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          Cloud (Persistencia)
+          Cloud (Guardado)
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-12 py-4">
@@ -71,7 +71,7 @@ export const HierarchyDiagram = () => {
           <div className="grid grid-cols-2 gap-4 text-sm">
              <div className="bg-slate-900 p-3 rounded border border-slate-700">
                 <div className="font-mono text-purple-300 mb-1">projects</div>
-                <div className="text-xs text-slate-500">Blob binario (Yjs)</div>
+                <div className="text-xs text-slate-500">Documento guardado (Yjs)</div>
              </div>
              <div className="bg-slate-900 p-3 rounded border border-slate-700">
                 <div className="font-mono text-purple-300 mb-1">assets</div>
@@ -102,17 +102,17 @@ export const BackendDiagram = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                <div className="bg-indigo-900/20 border border-indigo-500/40 p-4 rounded-lg">
                   <div className="flex items-center justify-between text-indigo-300 mb-2">
-                     <span className="font-mono font-bold">Relé Yjs</span>
+                     <span className="font-mono font-bold">Cambios compartidos</span>
                      <Wifi size={18} />
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                     Reenvía deltas binarios entre navegadores. No mantiene el documento en memoria.
+                     Transmite los cambios entre las personas que editan el mismo proyecto.
                   </p>
                </div>
 
                <div className="bg-cyan-900/20 border border-cyan-500/40 p-4 rounded-lg">
                   <div className="flex items-center justify-between text-cyan-300 mb-2">
-                     <span className="font-mono font-bold">Auth + API</span>
+                     <span className="font-mono font-bold">Acceso y comunicación</span>
                      <Shield size={18} />
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
@@ -122,7 +122,7 @@ export const BackendDiagram = () => {
 
                <div className="bg-emerald-900/20 border border-emerald-500/40 p-4 rounded-lg">
                   <div className="flex items-center justify-between text-emerald-300 mb-2">
-                     <span className="font-mono font-bold">Persistencia</span>
+                     <span className="font-mono font-bold">Guardado</span>
                      <Server size={18} />
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">

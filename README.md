@@ -42,3 +42,11 @@ These describe the reviewed development code; availability depends on the instal
 - **Embedded**: the version integrated into platform plugins and the Electron desktop application. Slides use the Spanish label **embebida**.
 
 Technical identifiers such as `build-static`, file paths and source class names are unchanged. These product names follow the project owner's terminology.
+
+## Formats and integration overview
+
+The current product scope supplied by the project owner excludes SCORM 2004 and includes a single-page web export alongside multi-page HTML5. This takes precedence over older source snapshots referenced above.
+
+The integration slide keeps four cards: WordPress, Omeka S, Moodle (covering all three activity plugins) and Nextcloud. Nextcloud's viewer/editor description follows [nextcloud-exelearning](https://github.com/exelearning/nextcloud-exelearning/tree/99ed39c64b709e15f9e806ba6388359de4352270).
+
+The Nextcloud icon uses the original geometry from the [official Nextcloud logo](https://github.com/nextcloud/server/blob/master/core/img/logo/logo.svg), with `currentColor` for both presentation themes. The icon is bundled locally.
